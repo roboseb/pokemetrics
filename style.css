@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+}
+
+#main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    background-color: tan;
+}
+
+#header {
+    padding: 10px;
+    background: skyblue;
+}
+
+#content {
+    background-color: springgreen;
+
+    display: flex;
+    flex-grow: 1;
+    gap: 10px;
+}
+
+#inputs {
+    padding: 10px;
+    background-color: salmon;
+
+    flex-grow: 1;
+}
+
+#display {
+    padding: 10px;
+    background-color: rosybrown;
+    flex-grow: 1;
+}
