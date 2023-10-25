@@ -16,5 +16,21 @@ October 20th, 2023
 
     Regardless, first step is to get a basic layout that can talk to the API.
 
+October 24th, 2023
+
+    Took the weekend off and then Monday too. I think this project will be fun and easy to get into. Couple hours of work today and then maybe 1 or 2 per day for the rest of the week.
+
+    Hopefully when I make progress I remember to record it so I can maybe make a video.
+
 --To-Do--
 
+-basic inputs
+-Enter pokemon name
+-enter weight
+-enter height
+-average both
+-show pokemon stats
+-custom font
+-three.js integration
+-prevent errors for unexpected input
+verify fetches are sanitized with input

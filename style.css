@@ -6,7 +6,6 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 10px;
 
     background-color: tan;
 }
@@ -16,12 +15,14 @@ body {
     background: skyblue;
 }
 
+#header>h1 {
+    margin: 0;
+}
+
 #content {
-    background-color: springgreen;
 
     display: flex;
     flex-grow: 1;
-    gap: 10px;
 }
 
 #inputs {
@@ -34,5 +35,39 @@ body {
 #display {
     padding: 10px;
     background-color: rosybrown;
-    flex-grow: 1;
+}
+
+#poke-art {
+    height: 35vw;
+    max-height: 30rem;
+
+    background-color: rgba(137, 235, 57, 0.466);
+}
+
+form {
+    background-color: royalblue;
+
+    display: grid;
+    grid-template-columns: 30% 70%;
+    column-gap: 10px;
+    row-gap: 10px;
+    padding: 10px;
+
+    justify-items: right;
+}
+
+form input {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+form label {
+
+    background-color: sandybrown;
+}
+
+form button {
+    column-span: 1;
 }
