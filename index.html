@@ -20,18 +20,25 @@
                 <h2>Options</h2>
                 <form action="">
                     <label for="poke-name-input">Pokemon Name</label>
-                    <input type="text" id='poke-name-input'>
+                    <input type="text" id='poke-name-input' value='sadas'>
 
                     <label for="height-input">Your Height</label>
-                    <input type="number" id='height-input'>
+                    <input type="number" id='height-input' min='1' value="165">
 
                     <label for="weight-input">Your Weight</label>
-                    <input type="number" id='weight-input'>
+                    <input type="number" id='weight-input' min="1">
 
                     <button type='button' id='convert-btn'>Convert to Pokemon</button>
                 </form>
 
+                <div id="result-info">
+                    Result info will be displayed here.
+                </div>
             </div>
+
+
+
+
             <div id="display">
                 <img id="poke-art"></img>
 
