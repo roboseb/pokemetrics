@@ -28,6 +28,14 @@ October 25th, 2023
 
     We now have a system that will give you a pokemon at random if the API cannot find the one you typed out. It also gives a conversion telling you how many of a given pokemon you are tall, when it works.
 
+October 26th, 2023
+
+    Ate too much candy corn, we'll see how the day goes.
+
+    Today I need to fix the unit conversion to work with chosen and random pokemon, and maybe start animating/displaying it a bit.
+
+    The issue is of course promise timing related. Simply call sync functions from within async functions as opposed to the other way around.
+
 --To-Do--
 
 -basic inputs
@@ -44,3 +52,6 @@ DONE-enter height
 -unit options (default metric?)
 person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
 -error message for pokemon not found
+-figure out how to pluralize
+-show height/show weight toggle
+DONE-avoid recursion on infinite .catch for fetch
