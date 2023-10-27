@@ -36,6 +36,12 @@ October 26th, 2023
 
     The issue is of course promise timing related. Simply call sync functions from within async functions as opposed to the other way around.
 
+October 27th, 2023
+
+    Everything that's here works about as well as I could hope. Cleaned and dried up the code yesterday, so today I can work on actually adding features. Theoretically the only new functionality I need from here will be to add the "which pokemon am I?" feature and then maybe unit options. Everything else will be displaying info I already have and styling.
+
+    So main issue is that getting data for one pokemon is much easier than comparing the height and weight of all 1200 at once. I think I can use the pokeAPI to write my own static JSON file that simply has height and weight associated with each pokemon.
+
 --To-Do--
 
 -basic inputs
@@ -55,3 +61,6 @@ person silhouette to compare sizes, keep pokemon same size never change man. Nev
 -figure out how to pluralize
 -show height/show weight toggle
 DONE-avoid recursion on infinite .catch for fetch
+-mobile layout
+-possible pokedex styling
+-style using pokemoncolor data/extra fetch

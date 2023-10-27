@@ -1,0 +1,198 @@
+{
+    "bulbasaur": {
+        "height": 7,
+        "weight": 69
+    },
+    "ivysaur": {
+        "height": 10,
+        "weight": 130
+    },
+    "venusaur": {
+        "height": 20,
+        "weight": 1000
+    },
+    "charmander": {
+        "height": 6,
+        "weight": 85
+    },
+    "charmeleon": {
+        "height": 11,
+        "weight": 190
+    },
+    "charizard": {
+        "height": 17,
+        "weight": 905
+    },
+    "squirtle": {
+        "height": 5,
+        "weight": 90
+    },
+    "wartortle": {
+        "height": 10,
+        "weight": 225
+    },
+    "blastoise": {
+        "height": 16,
+        "weight": 855
+    },
+    "caterpie": {
+        "height": 3,
+        "weight": 29
+    },
+    "metapod": {
+        "height": 7,
+        "weight": 99
+    },
+    "butterfree": {
+        "height": 11,
+        "weight": 320
+    },
+    "weedle": {
+        "height": 3,
+        "weight": 32
+    },
+    "kakuna": {
+        "height": 6,
+        "weight": 100
+    },
+    "beedrill": {
+        "height": 10,
+        "weight": 295
+    },
+    "pidgey": {
+        "height": 3,
+        "weight": 18
+    },
+    "pidgeotto": {
+        "height": 11,
+        "weight": 300
+    },
+    "pidgeot": {
+        "height": 15,
+        "weight": 395
+    },
+    "rattata": {
+        "height": 3,
+        "weight": 35
+    },
+    "raticate": {
+        "height": 7,
+        "weight": 185
+    },
+    "spearow": {
+        "height": 3,
+        "weight": 20
+    },
+    "fearow": {
+        "height": 12,
+        "weight": 380
+    },
+    "ekans": {
+        "height": 20,
+        "weight": 69
+    },
+    "arbok": {
+        "height": 35,
+        "weight": 650
+    },
+    "pikachu": {
+        "height": 4,
+        "weight": 60
+    },
+    "raichu": {
+        "height": 8,
+        "weight": 300
+    },
+    "sandshrew": {
+        "height": 6,
+        "weight": 120
+    },
+    "sandslash": {
+        "height": 10,
+        "weight": 295
+    },
+    "nidoran-f": {
+        "height": 4,
+        "weight": 70
+    },
+    "nidorina": {
+        "height": 8,
+        "weight": 200
+    },
+    "nidoqueen": {
+        "height": 13,
+        "weight": 600
+    },
+    "nidoran-m": {
+        "height": 5,
+        "weight": 90
+    },
+    "nidorino": {
+        "height": 9,
+        "weight": 195
+    },
+    "nidoking": {
+        "height": 14,
+        "weight": 620
+    },
+    "clefairy": {
+        "height": 6,
+        "weight": 75
+    },
+    "clefable": {
+        "height": 13,
+        "weight": 400
+    },
+    "vulpix": {
+        "height": 6,
+        "weight": 99
+    },
+    "ninetales": {
+        "height": 11,
+        "weight": 199
+    },
+    "jigglypuff": {
+        "height": 5,
+        "weight": 55
+    },
+    "wigglytuff": {
+        "height": 10,
+        "weight": 120
+    },
+    "zubat": {
+        "height": 8,
+        "weight": 75
+    },
+    "golbat": {
+        "height": 16,
+        "weight": 550
+    },
+    "oddish": {
+        "height": 5,
+        "weight": 54
+    },
+    "gloom": {
+        "height": 8,
+        "weight": 86
+    },
+    "vileplume": {
+        "height": 12,
+        "weight": 186
+    },
+    "paras": {
+        "height": 3,
+        "weight": 54
+    },
+    "parasect": {
+        "height": 10,
+        "weight": 295
+    },
+    "venonat": {
+        "height": 10,
+        "weight": 300
+    },
+    "venomoth": {
+        "height": 15,
+        "weight": 125
+    }
+}
