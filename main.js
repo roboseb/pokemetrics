@@ -3,11 +3,12 @@ console.log(pokeData);
 
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.
-async function convertToPokemon(randomized) {
+async function convertToPokemon(randomized, pokemon) {
 
     const pokeNameInput = document.getElementById('poke-name-input');
     let selection;
     randomized ? selection = Math.floor(Math.random() * 500) : selection = pokeNameInput.value;
+    if (pokemon) selection = pokemon;
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${selection}`).then((response) => {
         if (response.ok) {
@@ -35,8 +36,14 @@ convertToPokemon(false);
 
 // Consider entered weight and chosen pokemon and convert to pokemetric.
 const convert = (data) => {
-    const userHeight = document.getElementById('height-input').value;
-    const userWeight = document.getElementById('weight-input').value;
+    let userHeight = document.getElementById('height-input').value;
+    let userWeight = document.getElementById('weight-input').value;
+
+    // Convert entered units to metric if mode is imperial.
+    if (units === 'imperial') {
+        userHeight = userHeight * 2.54;
+        userWeight = userWeight * 0.453592;
+    }
 
     // Check what info the user has entered and convert accordingly.
     if (userHeight !== '') {
@@ -61,52 +68,61 @@ const displayResult = (message, metric) => {
 const convertBtn = document.getElementById('convert-btn');
 convertBtn.addEventListener('click', () => { convertToPokemon(false) });
 
-let dataObj = {}
+// Add event listener to button for finding closest pokemon.
+const closestBtn = document.getElementById('closest-btn');
+closestBtn.addEventListener('click', () => {
 
-async function fetchNext() {
-    let currentPos = Object.entries(dataObj).length + 1;
-    console.log(currentPos)
+    // Convert cm and kg to dumb pokemon units.
+    let userHeight = document.getElementById('height-input').value / 10;
+    let userWeight = document.getElementById('weight-input').value * 10;
 
-    fetch(`https://pokeapi.co/api/v2/pokemon/${currentPos}`).then((response) => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error('Something went wrong');
-    })
-        .then((data) => {
-            if (currentPos < 50) {
-                updateObj(data);
-                fetchNext()
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-}
-
-const updateObj = (data) => {
-    let newData = {
-        height: data.height,
-        weight: data.weight
+    // Convert entered units to metric if mode is imperial.
+    if (units === 'imperial') {
+        userHeight = userHeight * 2.54;
+        userWeight = userWeight * 0.453592;
     }
 
-    dataObj[data.name] = newData;
-    console.log(dataObj);
-}
+    if (!!userHeight && !!userWeight) {
+        console.log('you got both!')
+        findClosest(userHeight, userWeight);
+    } else {
+        console.log("you're missing something!")
+    }
+});
 
 // Go through the list of all pokemon to find the closest match to entered weight/height.
 const findClosest = (height, weight) => {
-    const goal = height + weight;
     let closest = Object.entries(pokeData).reduce(function (prev, curr) {
-        console.log(Math.abs(curr[1]['height'] + curr[1]['weight'] - goal));
-        return (Math.abs(curr[1]['height'] + curr[1]['weight'] - goal) < Math.abs(prev[1]['height'] + prev[1]['weight'] - goal) ? curr : prev);
+
+        // Height has been multiplied while 
+        const heightDiff = Math.abs(curr[1]['height'] - height) * 10;
+        const weightDiff = Math.abs(curr[1]['weight'] - weight);
+        const prevHeightDiff = Math.abs(prev[1]['height'] - height) * 10;
+        const prevWeightDiff = Math.abs(prev[1]['weight'] - weight);
+
+        return (heightDiff + weightDiff) < (prevHeightDiff + prevWeightDiff) ? curr : prev;
     });
+    console.log(closest[0])
 
-    //Object.entries()
-
-    console.log(closest)
+    convertToPokemon(false, closest[0])
 }
 
-findClosest(100, 30);
+// Toggle between imperial and metric units.
+const switchUnits = () => {
+    const heightUnit = document.getElementById('height-unit');
+    const weightUnit = document.getElementById('weight-unit');
 
-//fetchNext()
+    if (units === 'metric') {
+        heightUnit.innerText = 'in';
+        weightUnit.innerText = 'lbs';
+        units = 'imperial';
+    } else {
+        heightUnit.innerText = 'cm';
+        weightUnit.innerText = 'kg';
+        units = 'metric';
+    }
+}
+
+const unitBtn = document.getElementById('unit-btn');
+let units = 'metric';
+unitBtn.addEventListener('click', switchUnits);

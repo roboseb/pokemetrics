@@ -42,6 +42,16 @@ October 27th, 2023
 
     So main issue is that getting data for one pokemon is much easier than comparing the height and weight of all 1200 at once. I think I can use the pokeAPI to write my own static JSON file that simply has height and weight associated with each pokemon.
 
+October 30th, 2023
+
+    Worked for a couples hours on this last time, and will do the same for the rest of this week, maybe even done by the end of friday. Here's why.
+
+    Went to a halloween party on friday, and was discussing some programming stuff with a dude who seemed much better educated than me. I explained my problem with finding "similar" sized pokemon, and he drew me a little diagram that I think is exactly what I needed. If I remember to, I'll add a photo of what he showed me to this README.
+
+    I'm gonna have to try this on a larger scale, but I think it worked, and the function now finds the true most "similar" pokemon. I have to wait for my thing to ping the pokeAPI 1200 times and collect the data I need for every pokemon, but once that's done I'll just have one somewhat gigantic JSON file but everything else on the API.
+
+    Big fetches are done, and all the units line up now for metric.
+
 --To-Do--
 
 -basic inputs
@@ -64,3 +74,4 @@ DONE-avoid recursion on infinite .catch for fetch
 -mobile layout
 -possible pokedex styling
 -style using pokemoncolor data/extra fetch
+-localstorage to save units
