@@ -57,6 +57,21 @@ body {
 #display {
     padding: 10px;
     background-color: rosybrown;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#poke-name-number {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#poke-name, #poke-number {
+    font-size: 30px;
+
+    padding: 0;
+    margin: 0;
 }
 
 #poke-art {
@@ -64,4 +79,28 @@ body {
     max-height: 30rem;
 
     background-color: rgba(137, 235, 57, 0.466);
+}
+
+#type-box {
+    display: flex;
+    justify-content: space-evenly;
+
+    background-color: tan;
+    padding: 10px;
+}
+
+#poke-size-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#poke-weight, #poke-height {
+    background-color: tan;
+    padding: 10px 0px;
+
+    width: 100%;
+    text-align: center;
 }

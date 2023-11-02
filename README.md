@@ -52,6 +52,10 @@ October 30th, 2023
 
     Big fetches are done, and all the units line up now for metric.
 
+October 31st, 2023
+
+    Working out of USASK today, feel like a proper student. I think today will primarily consist of adding the pokemon info in to have a pokedex like thing and then some basic styling.
+
 --To-Do--
 
 -basic inputs

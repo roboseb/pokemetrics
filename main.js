@@ -1,5 +1,4 @@
 import pokeData from './pokeData.json';
-console.log(pokeData);
 
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.
@@ -17,9 +16,7 @@ async function convertToPokemon(randomized, pokemon) {
         throw new Error('Something went wrong');
     })
         .then((data) => {
-            console.log(`Height: ${data.height * 10}cm Weight: ${data.weight / 10}kg`);
-            const pokeArt = document.getElementById('poke-art');
-            pokeArt.src = data.sprites.other['official-artwork']['front_default'];
+            displayPokeInfo(data);
 
             // Compare user metrics to pokemon size and display info.
             convert(data);
@@ -36,6 +33,7 @@ convertToPokemon(false);
 
 // Consider entered weight and chosen pokemon and convert to pokemetric.
 const convert = (data) => {
+    //console.log(data);
     let userHeight = document.getElementById('height-input').value;
     let userWeight = document.getElementById('weight-input').value;
 
@@ -61,7 +59,44 @@ const convert = (data) => {
 const displayResult = (message, metric) => {
     const resultBox = document.getElementById(`${metric}-result`);
     resultBox.innerText = message;
+}
 
+// Primary function for diplaying fetched pokemon info.
+const displayPokeInfo = (data) => {
+    //console.log(`Height: ${data.height * 10}cm Weight: ${data.weight / 10}kg`);
+    const pokeArt = document.getElementById('poke-art');
+    pokeArt.src = data.sprites.other['official-artwork']['front_default'];
+
+    const pokeName = document.getElementById('poke-name');
+    pokeName.innerText = data['name'];
+
+    const pokeNumber = document.getElementById('poke-number');
+    pokeNumber.innerText = `#${data['id']}`;
+
+    const type1 = document.getElementById('type-1');
+    type1.innerText = data['types']['0']['type']['name']; 
+
+    const type2 = document.getElementById('type-2');
+
+    console.log(Object.keys(data['types']).length)
+
+    // If the pokemon has two types, display the second, otherwise clear previous second type.
+    if (Object.keys(data['types']).length > 1) {
+        type2.innerText = data['types']['1']['type']['name']; 
+    } else {
+        type2.innerText = ''; 
+    }
+
+    const height = document.getElementById('poke-height');
+    height.innerText = `${data['height'] * 10} cm`; 
+
+    const weight = document.getElementById('poke-weight');
+    weight.innerText = `${data['weight'] / 10} kg`; 
+
+    if (units === 'imperial') {
+        height.innerText = `${(data['height'] * 10 * 0.393701).toFixed(0)} in`;
+        weight.innerText = `${(data['weight'] / 10 * 2.20462).toFixed(0)} lb`;
+    }
 }
 
 // Add event listener to make convert button convert units to pokemetric.
@@ -102,7 +137,7 @@ const findClosest = (height, weight) => {
 
         return (heightDiff + weightDiff) < (prevHeightDiff + prevWeightDiff) ? curr : prev;
     });
-    console.log(closest[0])
+    //console.log(closest[0])
 
     convertToPokemon(false, closest[0])
 }
