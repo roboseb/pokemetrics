@@ -56,21 +56,29 @@ October 31st, 2023
 
     Working out of USASK today, feel like a proper student. I think today will primarily consist of adding the pokemon info in to have a pokedex like thing and then some basic styling.
 
+November 2nd, 2023
+
+    Should have worked on this yesterday, but was distracted by a certain lady friend. We did some jigsaw puzzles.
+
+    With the stats of the pokemon being displayed, 90% of the core UI stuff should be there, leaving me with mostly styling to do.
+
+    Song of the day is On Fire by JOYRYDE.
+
 --To-Do--
 
--basic inputs
+DONE-basic inputs
 DONE-Enter pokemon name
 DONE-enter weight
 DONE-enter height
--average both
--show pokemon stats
+DONE-average both
+DONE-show pokemon stats
 -custom font
 -three.js integration
 -prevent errors for unexpected input
 -verify fetches are sanitized with input
 -implement constraints for height/weight/pokemon name length
--unit options (default metric?)
-person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
+DONE-unit options (default metric?)
+-person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
 -error message for pokemon not found
 -figure out how to pluralize
 -show height/show weight toggle
@@ -79,3 +87,7 @@ DONE-avoid recursion on infinite .catch for fetch
 -possible pokedex styling
 -style using pokemoncolor data/extra fetch
 -localstorage to save units
+-tierzoo attack animations
+-throw multiple pokeballs to show how many pokemon
+-add feet and inches
+-use canvas and trim canvas to stack pokemon

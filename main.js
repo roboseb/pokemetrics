@@ -46,7 +46,7 @@ const convert = (data) => {
     // Check what info the user has entered and convert accordingly.
     if (userHeight !== '') {
         const heightFactor = (userHeight / (data.height * 10)).toFixed(1);
-        displayResult(`You are as tall as ${heightFactor} ${data.name}s.`, 'height');
+        displayResult(`You are as tall as ${heightFactor} ${data.name}s.`, 'height', heightFactor);
     }
 
     if (userWeight !== '') {
@@ -56,9 +56,22 @@ const convert = (data) => {
 }
 
 // Display unit conversion. 
-const displayResult = (message, metric) => {
+const displayResult = (message, metric, heightFactor) => {
     const resultBox = document.getElementById(`${metric}-result`);
     resultBox.innerText = message;
+
+    const pokeArtBox = document.getElementById('poke-art-box');
+    const pokeArt = document.getElementById('poke-art');
+
+    let newHeightFactor = Math.floor(heightFactor);
+
+    // Clone the poke art for as many times bigger you are than it.
+    for (let i = 0; i < newHeightFactor - 1; i++) {
+        const clonedNode = pokeArt.cloneNode(true);
+        clonedNode.id = `poke-art-${i}`
+        pokeArtBox.appendChild(clonedNode);
+    }
+
 }
 
 // Primary function for diplaying fetched pokemon info.
@@ -66,6 +79,9 @@ const displayPokeInfo = (data) => {
     //console.log(`Height: ${data.height * 10}cm Weight: ${data.weight / 10}kg`);
     const pokeArt = document.getElementById('poke-art');
     pokeArt.src = data.sprites.other['official-artwork']['front_default'];
+
+    const pokeArt2 = document.getElementById('poke-art-2');
+    pokeArt2.src = data.sprites.other['official-artwork']['front_default'];
 
     const pokeName = document.getElementById('poke-name');
     pokeName.innerText = data['name'];
@@ -78,13 +94,12 @@ const displayPokeInfo = (data) => {
 
     const type2 = document.getElementById('type-2');
 
-    console.log(Object.keys(data['types']).length)
-
     // If the pokemon has two types, display the second, otherwise clear previous second type.
     if (Object.keys(data['types']).length > 1) {
+        type2.style.display = null;
         type2.innerText = data['types']['1']['type']['name']; 
     } else {
-        type2.innerText = ''; 
+        type2.style.display = 'none';
     }
 
     const height = document.getElementById('poke-height');
@@ -150,10 +165,24 @@ const switchUnits = () => {
     if (units === 'metric') {
         heightUnit.innerText = 'in';
         weightUnit.innerText = 'lbs';
-        units = 'imperial';
     } else {
         heightUnit.innerText = 'cm';
         weightUnit.innerText = 'kg';
+    }
+
+    // Get previous displayed weight and height to convert.
+    let pokeHeight = document.getElementById('poke-height');
+    let pokeWeight = document.getElementById('poke-weight');
+    let newHeight = pokeHeight.innerText.split(' ')[0];
+    let newWeight = pokeWeight.innerText.split(' ')[0];
+
+    if (units === 'metric') {
+        pokeHeight.innerText = `${(newHeight * 0.393701).toFixed(0)} in`
+        pokeWeight.innerText = `${(newWeight * 2.20462).toFixed(0)} lbs`
+        units = 'imperial';
+    } else {
+        pokeHeight.innerText = `${(newHeight * 2.54).toFixed(0)} cm`
+        pokeWeight.innerText = `${(newWeight * 0.453592).toFixed(0)} kg`
         units = 'metric';
     }
 }

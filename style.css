@@ -60,6 +60,7 @@ body {
 
     display: flex;
     flex-direction: column;
+    width: 50vw;
 }
 
 #poke-name-number {
@@ -74,11 +75,26 @@ body {
     margin: 0;
 }
 
-#poke-art {
-    height: 35vw;
-    max-height: 30rem;
+#poke-art-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 
+    height: 250px;
+    width: 50%;
+
+    
+}
+
+.art-wrapper {
+   
     background-color: rgba(137, 235, 57, 0.466);
+    width: 100%;
+    
+}
+
+.poke-art {
+    width: 100%;
 }
 
 #type-box {
