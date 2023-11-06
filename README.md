@@ -64,6 +64,16 @@ November 2nd, 2023
 
     Song of the day is On Fire by JOYRYDE.
 
+November 6th, 2023
+
+    Got upset at this last time I worked on it as I am stuck on having an image in a flex box dynamically resize down vertically. Works fine horizontally, then breaks on vertical.
+
+    Fixed, and pretty quickly. Just a sprinkle of JS.
+
+    I think using JS was the right call anyway, as I now have code that displays a more accurate pokemon-to-person ratio.
+
+    Fixed a bunch of little problems that came up one after the other. Everything is now drawn onto canvases with proper resolution, and transparent whitespace is automatically removed. Biggest issue right now is that copying over the canvases is not working. Hopefully by tomorrow.
+
 --To-Do--
 
 DONE-basic inputs
@@ -91,3 +101,7 @@ DONE-avoid recursion on infinite .catch for fetch
 -throw multiple pokeballs to show how many pokemon
 -add feet and inches
 -use canvas and trim canvas to stack pokemon
+
+--Credits--
+
+https://ourcodeworld.com/articles/read/683/how-to-remove-the-transparent-pixels-that-surrounds-a-canvas-in-javascript#disqus_thread (canvas trimming function)

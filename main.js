@@ -1,4 +1,5 @@
 import pokeData from './pokeData.json';
+import trimCanvas from './trimCanvas';
 
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.
@@ -61,27 +62,71 @@ const displayResult = (message, metric, heightFactor) => {
     resultBox.innerText = message;
 
     const pokeArtBox = document.getElementById('poke-art-box');
-    const pokeArt = document.getElementById('poke-art');
+    const pokeArt = document.querySelector('.art-wrapper');
 
     let newHeightFactor = Math.floor(heightFactor);
 
-    // Clone the poke art for as many times bigger you are than it.
-    for (let i = 0; i < newHeightFactor - 1; i++) {
-        const clonedNode = pokeArt.cloneNode(true);
-        clonedNode.id = `poke-art-${i}`
-        pokeArtBox.appendChild(clonedNode);
-    }
+    // Skip resetting details if displaying weight.
+    if (!heightFactor) return;
 
+    // Clear previously cloned nodes.
+    const clonedNodes = Array.from(document.querySelectorAll('.cloned'));
+    clonedNodes.forEach((node) => {
+        node.remove();
+    });
+
+    // Clone the poke art for as many times bigger you are than it.
+
+    setTimeout(() => {
+        for (let i = 0; i < newHeightFactor - 1; i++) {
+            const clonedNode = pokeArt.cloneNode(true);
+            const oldCanvas = pokeArt.querySelector('canvas');
+    
+            const newCanvas = document.createElement('canvas');
+            const context = newCanvas.getContext('2d');
+            newCanvas.width = oldCanvas.width;
+            newCanvas.height = oldCanvas.height;
+    
+            console.log(oldCanvas.toDataURL);
+        
+            context.drawImage(oldCanvas, 0, 0);       
+            
+            clonedNode.id = `poke-art-${i}`
+            clonedNode.classList.add('cloned');
+            pokeArtBox.appendChild(clonedNode);
+        }
+    }, 1000)
+
+    // Inverse ratio, then resize the pokeart in case multiple will be shown.
+    const denominator = 100 * heightFactor;
+    const inverseRatio = 100 / denominator;
+    const r = document.querySelector(':root');
+    r.style.setProperty('--art-ratio', `${inverseRatio * 100}%`);
 }
 
 // Primary function for diplaying fetched pokemon info.
 const displayPokeInfo = (data) => {
     //console.log(`Height: ${data.height * 10}cm Weight: ${data.weight / 10}kg`);
-    const pokeArt = document.getElementById('poke-art');
+    const pokeArt = document.getElementById('ref-img');
+    pokeArt.crossOrigin = "Anonymous";
     pokeArt.src = data.sprites.other['official-artwork']['front_default'];
 
-    const pokeArt2 = document.getElementById('poke-art-2');
-    pokeArt2.src = data.sprites.other['official-artwork']['front_default'];
+    const canvas = document.querySelector('canvas');
+    canvas.width = pokeArt.width;
+    canvas.height = pokeArt.height; 
+
+    const ctx = canvas.getContext("2d");
+    pokeArt.addEventListener("load", (e) => {
+        // Draw the reference image before trimming.
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(pokeArt, 0, 0, canvas.height * pokeArt.width / pokeArt.height, canvas.height);
+
+        //Remove transparent edges from poke art.
+        const trimmedCanvas = trimCanvas(canvas);
+        canvas.replaceWith(trimmedCanvas);
+        trimmedCanvas.id = 'poke-art';
+        trimmedCanvas.classList.add('poke-art');
+    });
 
     const pokeName = document.getElementById('poke-name');
     pokeName.innerText = data['name'];
@@ -90,23 +135,23 @@ const displayPokeInfo = (data) => {
     pokeNumber.innerText = `#${data['id']}`;
 
     const type1 = document.getElementById('type-1');
-    type1.innerText = data['types']['0']['type']['name']; 
+    type1.innerText = data['types']['0']['type']['name'];
 
     const type2 = document.getElementById('type-2');
 
     // If the pokemon has two types, display the second, otherwise clear previous second type.
     if (Object.keys(data['types']).length > 1) {
         type2.style.display = null;
-        type2.innerText = data['types']['1']['type']['name']; 
+        type2.innerText = data['types']['1']['type']['name'];
     } else {
         type2.style.display = 'none';
     }
 
     const height = document.getElementById('poke-height');
-    height.innerText = `${data['height'] * 10} cm`; 
+    height.innerText = `${data['height'] * 10} cm`;
 
     const weight = document.getElementById('poke-weight');
-    weight.innerText = `${data['weight'] / 10} kg`; 
+    weight.innerText = `${data['weight'] / 10} kg`;
 
     if (units === 'imperial') {
         height.innerText = `${(data['height'] * 10 * 0.393701).toFixed(0)} in`;
