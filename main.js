@@ -17,8 +17,6 @@ async function convertToPokemon(randomized, pokemon) {
         throw new Error('Something went wrong');
     })
         .then((data) => {
-            displayPokeInfo(data);
-
             // Compare user metrics to pokemon size and display info.
             convert(data);
         })
@@ -47,24 +45,22 @@ const convert = (data) => {
     // Check what info the user has entered and convert accordingly.
     if (userHeight !== '') {
         const heightFactor = (userHeight / (data.height * 10)).toFixed(1);
-        displayResult(`You are as tall as ${heightFactor} ${data.name}s.`, 'height', heightFactor);
+        displayResult(data, `You are as tall as ${heightFactor} ${data.name}s.`, 'height', heightFactor);
     }
 
     if (userWeight !== '') {
         const weightFactor = (userWeight / (data.weight / 10)).toFixed(1);
-        displayResult(`You are as heavy as ${weightFactor} ${data.name}s.`, 'weight');
+        displayResult(data, `You are as heavy as ${weightFactor} ${data.name}s.`, 'weight');
     }
 }
 
 // Display unit conversion. 
-const displayResult = (message, metric, heightFactor) => {
+const displayResult = (data, message, metric, heightFactor) => {
     const resultBox = document.getElementById(`${metric}-result`);
     resultBox.innerText = message;
 
     const pokeArtBox = document.getElementById('poke-art-box');
     const pokeArt = document.querySelector('.art-wrapper');
-
-    let newHeightFactor = Math.floor(heightFactor);
 
     // Skip resetting details if displaying weight.
     if (!heightFactor) return;
@@ -75,57 +71,79 @@ const displayResult = (message, metric, heightFactor) => {
         node.remove();
     });
 
-    // Clone the poke art for as many times bigger you are than it.
-
-    setTimeout(() => {
-        for (let i = 0; i < newHeightFactor - 1; i++) {
-            const clonedNode = pokeArt.cloneNode(true);
-            const oldCanvas = pokeArt.querySelector('canvas');
-    
-            const newCanvas = document.createElement('canvas');
-            const context = newCanvas.getContext('2d');
-            newCanvas.width = oldCanvas.width;
-            newCanvas.height = oldCanvas.height;
-    
-            console.log(oldCanvas.toDataURL);
-        
-            context.drawImage(oldCanvas, 0, 0);       
-            
-            clonedNode.id = `poke-art-${i}`
-            clonedNode.classList.add('cloned');
-            pokeArtBox.appendChild(clonedNode);
-        }
-    }, 1000)
-
     // Inverse ratio, then resize the pokeart in case multiple will be shown.
     const denominator = 100 * heightFactor;
     const inverseRatio = 100 / denominator;
     const r = document.querySelector(':root');
     r.style.setProperty('--art-ratio', `${inverseRatio * 100}%`);
+    
+    // Set gap between pokemon stacked based on ratio.
+    // r.style.setProperty('--poke-gap', `-${15 * inverseRatio}px`)
+
+    let newHeightFactor = Math.floor(heightFactor);
+    if (newHeightFactor < 1) newHeightFactor = 1;
+    displayPokeInfo(data, newHeightFactor, heightFactor);
 }
 
 // Primary function for diplaying fetched pokemon info.
-const displayPokeInfo = (data) => {
+const displayPokeInfo = (data, heightFactor, oldHeightFactor) => {
     //console.log(`Height: ${data.height * 10}cm Weight: ${data.weight / 10}kg`);
     const pokeArt = document.getElementById('ref-img');
     pokeArt.crossOrigin = "Anonymous";
     pokeArt.src = data.sprites.other['official-artwork']['front_default'];
 
-    const canvas = document.querySelector('canvas');
-    canvas.width = pokeArt.width;
-    canvas.height = pokeArt.height; 
+    const pokeArtBox = document.getElementById('poke-art-box');
 
-    const ctx = canvas.getContext("2d");
     pokeArt.addEventListener("load", (e) => {
-        // Draw the reference image before trimming.
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(pokeArt, 0, 0, canvas.height * pokeArt.width / pokeArt.height, canvas.height);
 
-        //Remove transparent edges from poke art.
-        const trimmedCanvas = trimCanvas(canvas);
-        canvas.replaceWith(trimmedCanvas);
-        trimmedCanvas.id = 'poke-art';
-        trimmedCanvas.classList.add('poke-art');
+        // Clear all previous art from the box.
+        pokeArtBox.textContent = '';
+
+        // Clone the poke art for as many times bigger you are than it.
+        console.log(heightFactor);
+        for (let i = 0; i < heightFactor; i++) {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('art-wrapper');
+
+            const canvas = document.createElement('canvas');
+            //canvas.classList.add('poke-art');
+            canvas.width = pokeArt.width;
+            canvas.height = pokeArt.height;
+            const ctx = canvas.getContext("2d");
+            // Draw the reference image before trimming.
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(pokeArt, 0, 0, canvas.height * pokeArt.width / pokeArt.height, canvas.height);
+
+            //Remove transparent edges from poke art.
+            const trimmedCanvas = trimCanvas(canvas);
+            canvas.replaceWith(trimmedCanvas);
+            trimmedCanvas.id = `poke-art-${i}`;
+            trimmedCanvas.classList.add('poke-art');
+
+            pokeArtBox.appendChild(wrapper);
+            wrapper.appendChild(trimmedCanvas);
+        }
+
+        // Add the art for the person size reference.
+        const manArt = document.createElement('img');
+        manArt.src = './images/man_outline.png';
+        manArt.id = 'man-art';
+        pokeArtBox.appendChild(manArt);
+
+        // Scale the man art down if he's smaller than the pokemon.
+        if (oldHeightFactor < 1) {
+            manArt.style.height = `${oldHeightFactor * 100}%`;
+        }
+
+        const canvas = document.querySelector('canvas');
+        const artBox = document.getElementById('poke-art-box');
+
+        // Shrink the entire artbox down if pokemon is too wide to maintin aspect ratio.
+        if (oldHeightFactor < 1 && canvas.width > canvas.height) {
+            artBox.style.height = `${canvas.height}px`;
+        } else {
+            artBox.style.height = null;
+        }
     });
 
     const pokeName = document.getElementById('poke-name');

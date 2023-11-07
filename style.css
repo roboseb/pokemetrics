@@ -1,5 +1,6 @@
 :root {
     --art-ratio: 100%;
+    --poke-gap: -7px;
 }
 
 body {
@@ -70,6 +71,7 @@ body {
 #poke-name-number {
     display: flex;
     justify-content: space-evenly;
+    flex: 1;
 }
 
 #poke-name, #poke-number {
@@ -83,21 +85,36 @@ body {
     display: flex;
     flex-direction: column-reverse;
     /* flex-wrap: wrap; */
-    gap: 10px;
-
-    height: 250px;
+    height: 60vh;
     /* width: 50%; */
+
+    background: rgba(24, 41, 138, 0.65);
+    position: relative;
+
+    align-items: center;
 }
 
 .art-wrapper {
-    background-color: rgba(137, 235, 57, 0.466);
+    /* background-color: rgba(137, 235, 57, 0.466); */
     height: var(--art-ratio);
     max-height: 100%;
+
+    margin-top: var(--poke-gap);
 }
 
 .poke-art {
     height: 100%;
     max-height: 100%;
+    max-width: 100%;
+}
+
+#man-art {
+    position: absolute;
+    bottom: 0;
+    right: 0%;
+    /* transform: translate(-50%, 0%); */
+    height: 100%;
+    opacity: 0.7;
 }
 
 #ref-img {
@@ -109,21 +126,13 @@ body {
     justify-content: space-evenly;
 
     background-color: tan;
-    padding: 10px;
-}
-
-#poke-size-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
+    flex: 1;
 }
 
 #poke-weight, #poke-height {
     background-color: tan;
-    padding: 10px 0px;
 
     width: 100%;
     text-align: center;
+    flex: 1;
 }

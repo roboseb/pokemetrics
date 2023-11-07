@@ -74,6 +74,14 @@ November 6th, 2023
 
     Fixed a bunch of little problems that came up one after the other. Everything is now drawn onto canvases with proper resolution, and transparent whitespace is automatically removed. Biggest issue right now is that copying over the canvases is not working. Hopefully by tomorrow.
 
+November 7th, 2023
+
+    Still stuck on copying canvases. Gonna try to setup something really basic so I can find out what the issue is.
+
+    Ended up moving a bunch of code around so that I could just repeat the initial canvas draw of the poke art instead of splitting it up. Works great now, no issues. Style time? Vape break first!
+    
+    Got a lot of good shit working. Wanna see if I can fix some basic aspect ration issues tomorrow.
+
 --To-Do--
 
 DONE-basic inputs
@@ -101,7 +109,16 @@ DONE-avoid recursion on infinite .catch for fetch
 -throw multiple pokeballs to show how many pokemon
 -add feet and inches
 -use canvas and trim canvas to stack pokemon
+-hovering over a pokemon in a stack makes all those below stay straighter but those above still wobble
+-fix NaN in size display
+-fix height factor 0 issues?
+-transition man size up and down when showing large pokemon
+-fix wailord is too long
 
 --Credits--
 
 https://ourcodeworld.com/articles/read/683/how-to-remove-the-transparent-pixels-that-surrounds-a-canvas-in-javascript#disqus_thread (canvas trimming function)
+
+man outline art
+
+<a href="https://www.vecteezy.com/free-vector/man-silhouette">Man Silhouette Vectors by Vecteezy</a>
