@@ -82,6 +82,12 @@ November 7th, 2023
     
     Got a lot of good shit working. Wanna see if I can fix some basic aspect ration issues tomorrow.
 
+November 8th, 2023
+
+    My cough is getting worse, my sniffles have gotten better. I'll take it.
+
+    Looking at the issue I was having with resizing certain pokeart, I think the issue isn't really art that is wider than it is tall, but we'll see.
+
 --To-Do--
 
 DONE-basic inputs
@@ -96,7 +102,7 @@ DONE-show pokemon stats
 -verify fetches are sanitized with input
 -implement constraints for height/weight/pokemon name length
 DONE-unit options (default metric?)
--person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
+DONE-person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
 -error message for pokemon not found
 -figure out how to pluralize
 -show height/show weight toggle
@@ -108,12 +114,20 @@ DONE-avoid recursion on infinite .catch for fetch
 -tierzoo attack animations
 -throw multiple pokeballs to show how many pokemon
 -add feet and inches
--use canvas and trim canvas to stack pokemon
+DONE-use canvas and trim canvas to stack pokemon
 -hovering over a pokemon in a stack makes all those below stay straighter but those above still wobble
 -fix NaN in size display
 -fix height factor 0 issues?
 -transition man size up and down when showing large pokemon
 -fix wailord is too long
+-fix old pokemon art showing in new size
+-error modals
+-fix art with issues - skarmory, raikou, dialga, metagross, electivire, muk, onix
+-shadows under pokemon
+-wobble toggle
+-buttons that show specific pokemon, like the biggest or smallest
+-fix man not transitioning
+-app gets slower as you use it?
 
 --Credits--
 

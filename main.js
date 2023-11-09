@@ -74,19 +74,14 @@ const displayResult = (data, message, metric, heightFactor) => {
     // Inverse ratio, then resize the pokeart in case multiple will be shown.
     const denominator = 100 * heightFactor;
     const inverseRatio = 100 / denominator;
-    const r = document.querySelector(':root');
-    r.style.setProperty('--art-ratio', `${inverseRatio * 100}%`);
-    
-    // Set gap between pokemon stacked based on ratio.
-    // r.style.setProperty('--poke-gap', `-${15 * inverseRatio}px`)
 
     let newHeightFactor = Math.floor(heightFactor);
     if (newHeightFactor < 1) newHeightFactor = 1;
-    displayPokeInfo(data, newHeightFactor, heightFactor);
+    displayPokeInfo(data, newHeightFactor, heightFactor, inverseRatio);
 }
 
 // Primary function for diplaying fetched pokemon info.
-const displayPokeInfo = (data, heightFactor, oldHeightFactor) => {
+const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     //console.log(`Height: ${data.height * 10}cm Weight: ${data.weight / 10}kg`);
     const pokeArt = document.getElementById('ref-img');
     pokeArt.crossOrigin = "Anonymous";
@@ -95,12 +90,10 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor) => {
     const pokeArtBox = document.getElementById('poke-art-box');
 
     pokeArt.addEventListener("load", (e) => {
-
         // Clear all previous art from the box.
         pokeArtBox.textContent = '';
 
         // Clone the poke art for as many times bigger you are than it.
-        console.log(heightFactor);
         for (let i = 0; i < heightFactor; i++) {
             const wrapper = document.createElement('div');
             wrapper.classList.add('art-wrapper');
@@ -118,11 +111,22 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor) => {
             const trimmedCanvas = trimCanvas(canvas);
             canvas.replaceWith(trimmedCanvas);
             trimmedCanvas.id = `poke-art-${i}`;
-            trimmedCanvas.classList.add('poke-art');
+            trimmedCanvas.classList.add('poke-art', 'summon');
+
+            // Delay each additional piece of art's animation
+            trimmedCanvas.style.animationDelay = `${i * 100}ms`;
+            trimmedCanvas.style.opacity = '0';
+            setTimeout(() => {
+                trimmedCanvas.style.opacity = null;
+            }, i * 100 + 100)
 
             pokeArtBox.appendChild(wrapper);
             wrapper.appendChild(trimmedCanvas);
         }
+
+        // Update the poke art size based on ratio.
+        const r = document.querySelector(':root');
+        r.style.setProperty('--art-ratio', `${inverseRatio * 100}%`);
 
         // Add the art for the person size reference.
         const manArt = document.createElement('img');
@@ -179,7 +183,10 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor) => {
 
 // Add event listener to make convert button convert units to pokemetric.
 const convertBtn = document.getElementById('convert-btn');
-convertBtn.addEventListener('click', () => { convertToPokemon(false) });
+convertBtn.addEventListener('click', () => {
+    convertToPokemon(false);
+    animateUnsummon();
+});
 
 // Add event listener to button for finding closest pokemon.
 const closestBtn = document.getElementById('closest-btn');
@@ -248,6 +255,14 @@ const switchUnits = () => {
         pokeWeight.innerText = `${(newWeight * 0.453592).toFixed(0)} kg`
         units = 'metric';
     }
+}
+// Animate pokemon leaving the display.
+const animateUnsummon = () => {
+    const shownArt = Array.from(document.querySelectorAll('.poke-art'));
+    shownArt.forEach(art => {
+        art.classList.remove('summon');
+        art.classList.add('unsummon');
+    });
 }
 
 const unitBtn = document.getElementById('unit-btn');
