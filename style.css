@@ -1,6 +1,7 @@
 :root {
     --art-ratio: 100%;
     --poke-gap: -7px;
+    --man-art-height: calc(100%  - 20px);
 }
 
 body {
@@ -65,7 +66,6 @@ body {
 
     display: flex;
     flex-direction: column;
-    width: 50vw;
 }
 
 #poke-name-number {
@@ -81,11 +81,17 @@ body {
     margin: 0;
 }
 
+#art-box-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
 #poke-art-box {
     display: flex;
     flex-direction: column-reverse;
 
     height: 60vh;
+    width: 60vh;
     background: rgb(255, 255, 255);
     position: relative;
     align-items: center;
@@ -98,7 +104,6 @@ body {
 }
 
 .art-wrapper {
-    /* background-color: rgba(137, 235, 57, 0.466); */
     height: var(--art-ratio);
     max-height: 100%;
 
@@ -131,38 +136,33 @@ body {
 
 /* Select for all poke art that are not the first in stack. */
 .art-wrapper:not(:first-child):nth-child(odd)>.unsummon {
-    transform-origin: bottom;
-    animation-delay: 0;
-    animation: unsummon 0.3s cubic-bezier(.62,.17,.87,.4);
-    filter: opacity(0); 
+    transform-origin: center;
+    animation: unsummon 0.3s cubic-bezier(.62,.17,.87,.4) forwards;
 }
 
 @keyframes unsummon {
     0% {filter: opacity(1); transform: translate(0%, 0%) rotate(0deg);}
-    100% {filter: opacity(0); transform: translate(100%, 300%) rotate(-135deg);}
+    100% {filter: opacity(0); transform: translate(0%, 300%) rotate(-135deg);}
 }
 
 .art-wrapper:not(:first-child):nth-child(even)>.unsummon {
-    transform-origin: bottom;
-    animation-delay: 0;
-    animation: unsummonLeft 0.3s cubic-bezier(.62,.17,.87,.4);
-    filter: opacity(0); 
+    transform-origin: center;
+    animation: unsummonLeft 0.3s cubic-bezier(.62,.17,.87,.4) forwards;
 }
 
 @keyframes unsummonLeft {
     0% {filter: opacity(1); transform: translate(0%, 0%) rotate(0deg);}
-    100% {filter: opacity(0); transform: translate(-100%, 300%) rotate(135deg);}
+    100% {filter: opacity(0); transform: translate(-0%, 300%) rotate(135deg);}
 }
 
 /* Select for poke art that is the first in stack. */
 .art-wrapper:first-child>.unsummon {
-    animation: unsummonFirst 0.6s ease-in-out;
-    filter: opacity(0); 
+    animation: unsummonFirst 0.4s cubic-bezier(.62,.17,.87,.4) forwards;
 }
 
 @keyframes unsummonFirst {
-    0% {filter: opacity(1); transform: translate(0, 0);}
-    100% {filter: opacity(0); transform: translate(0, 200%);}
+    0% {filter: opacity(1); transform: translate(0, 0) scale(100%, 100%);}
+    100% {filter: opacity(0); transform: translate(0, 200%) scale(50%, 100%);}
 }
 
 #man-art {
@@ -170,9 +170,22 @@ body {
     bottom: 10px;
     right: 10px;
 
-    height: calc(100% - 20px);
+    height: var(--man-art-height);
     opacity: 0.7;
     transition: all 0.3s ease-in-out;
+}
+
+.man-snap {
+    transform-origin: bottom;
+    animation: man-snap 0.5s cubic-bezier(.08,.66,.15,1.0);
+}
+
+@keyframes man-snap {
+    0% {transform: skewX(0deg);}
+    25% {transform: skewX(-4deg) scaleY(90%); animation-timing-function: linear;}
+    40% {transform: skewX(0deg) scaleY(100%); animation-timing-function: cubic-bezier(.08,.66,.15,1.0)}
+    75% {transform: skewX(2deg) scaleY(95%);}
+    100% {transform: skewX(0deg);}
 }
 
 #ref-img {

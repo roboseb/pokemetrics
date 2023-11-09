@@ -88,6 +88,14 @@ November 8th, 2023
 
     Looking at the issue I was having with resizing certain pokeart, I think the issue isn't really art that is wider than it is tall, but we'll see.
 
+November 9th 2023
+
+    Looking at my last devlog, I basically just skipped that issue for the time being to clear my head, and spent yesterday doing animations. I think when I get back to it it won't be so bad.
+
+    Vape juice order came in. Iced cherry lime is the flavour of the day and is pretty baller.
+
+    My previous issue with animation fill mode not keeping the last animated state was fixed by simply adding "forwards" to the animation: shorthand.
+
 --To-Do--
 
 DONE-basic inputs
@@ -128,6 +136,19 @@ DONE-use canvas and trim canvas to stack pokemon
 -buttons that show specific pokemon, like the biggest or smallest
 -fix man not transitioning
 -app gets slower as you use it?
+-possibly fix pokemon not being removed if next loads too quickly
+-summonOpacity class is being overwritten
+-man snapped animation relative to pokemon weight relative to user weight?
+-random pokemon button
+-add splash effect for pokemon summon
+
+things done today
+fixed man transition animation/redraw
+fixed pokemon opacity bug
+added buttons for default pokemon
+added man snap animation
+fixed stacking image loaded event listener
+added check for short pokemon too wide
 
 --Credits--
 

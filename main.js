@@ -82,6 +82,7 @@ const displayResult = (data, message, metric, heightFactor) => {
 
 // Primary function for diplaying fetched pokemon info.
 const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
+
     //console.log(`Height: ${data.height * 10}cm Weight: ${data.weight / 10}kg`);
     const pokeArt = document.getElementById('ref-img');
     pokeArt.crossOrigin = "Anonymous";
@@ -90,6 +91,8 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     const pokeArtBox = document.getElementById('poke-art-box');
 
     pokeArt.addEventListener("load", (e) => {
+        console.log('art loaded called')
+
         // Clear all previous art from the box.
         pokeArtBox.textContent = '';
 
@@ -128,16 +131,14 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
         const r = document.querySelector(':root');
         r.style.setProperty('--art-ratio', `${inverseRatio * 100}%`);
 
-        // Add the art for the person size reference.
-        const manArt = document.createElement('img');
-        manArt.src = './images/man_outline.png';
-        manArt.id = 'man-art';
-        pokeArtBox.appendChild(manArt);
-
         // Scale the man art down if he's smaller than the pokemon.
         if (oldHeightFactor < 1) {
-            manArt.style.height = `${oldHeightFactor * 100}%`;
+            r.style.setProperty('--man-art-height', `${oldHeightFactor * 100}%`);
+        } else {
+            r.style.setProperty('--man-art-height', `calc(100% - 20px)`);
         }
+
+        animateManSnap();
 
         const canvas = document.querySelector('canvas');
         const artBox = document.getElementById('poke-art-box');
@@ -145,9 +146,15 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
         // Shrink the entire artbox down if pokemon is too wide to maintin aspect ratio.
         if (oldHeightFactor < 1 && canvas.width > canvas.height) {
             artBox.style.height = `${canvas.height}px`;
+        } else if (canvas.offsetWidth >= artBox.offsetWidth - 30) {
+            console.log('not too big but too wide')
         } else {
             artBox.style.height = null;
         }
+
+        // Remove the event listener for image loading by replacing pokeArt with a cloned node, preventing continuous incrementation of function call.
+        const pokeArtClone = pokeArt.cloneNode(true);
+        pokeArt.parentNode.replaceChild(pokeArtClone, pokeArt);
     });
 
     const pokeName = document.getElementById('poke-name');
@@ -181,11 +188,16 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     }
 }
 
+// Process and redraw poke art and animate man art on image load.
+const processArt = () => {
+
+}
+
 // Add event listener to make convert button convert units to pokemetric.
 const convertBtn = document.getElementById('convert-btn');
 convertBtn.addEventListener('click', () => {
-    convertToPokemon(false);
     animateUnsummon();
+    convertToPokemon(false);
 });
 
 // Add event listener to button for finding closest pokemon.
@@ -265,6 +277,23 @@ const animateUnsummon = () => {
     });
 }
 
+// Animate the man being snapped back and forth by the summoning of pokemon.
+const animateManSnap = () => {
+    const manArt = document.getElementById('man-art');
+    manArt.classList.remove('man-snap');
+    void manArt.offsetWidth;
+    manArt.classList.add('man-snap');
+}
+
 const unitBtn = document.getElementById('unit-btn');
 let units = 'metric';
 unitBtn.addEventListener('click', switchUnits);
+
+// Load from predetermined pokemon with buttons.
+const defPokemonBtns = Array.from(document.querySelectorAll('.def-pokemon-btn'));
+defPokemonBtns.forEach(button => {
+    button.addEventListener('click', () => {
+        animateUnsummon();
+        convertToPokemon(false, button.dataset.name);
+    })
+});
