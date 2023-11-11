@@ -7,7 +7,7 @@ async function convertToPokemon(randomized, pokemon) {
 
     const pokeNameInput = document.getElementById('poke-name-input');
     let selection;
-    randomized ? selection = Math.floor(Math.random() * 500) : selection = pokeNameInput.value;
+    randomized ? selection = Math.floor((Math.random() * 1008) + 1) : selection = pokeNameInput.value;
     if (pokemon) selection = pokemon;
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${selection}`).then((response) => {
@@ -91,7 +91,6 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     const pokeArtBox = document.getElementById('poke-art-box');
 
     pokeArt.addEventListener("load", (e) => {
-        console.log('art loaded called')
 
         // Clear all previous art from the box.
         pokeArtBox.textContent = '';
@@ -127,6 +126,10 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
             wrapper.appendChild(trimmedCanvas);
         }
 
+        // Remove the event listener for image loading by replacing pokeArt with a cloned node, preventing continuous incrementation of function call.
+        const pokeArtClone = pokeArt.cloneNode(true);
+        pokeArt.parentNode.replaceChild(pokeArtClone, pokeArt);
+
         // Update the poke art size based on ratio.
         const r = document.querySelector(':root');
         r.style.setProperty('--art-ratio', `${inverseRatio * 100}%`);
@@ -138,23 +141,8 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
             r.style.setProperty('--man-art-height', `calc(100% - 20px)`);
         }
 
+        resizeArtBox(data);
         animateManSnap();
-
-        const canvas = document.querySelector('canvas');
-        const artBox = document.getElementById('poke-art-box');
-
-        // Shrink the entire artbox down if pokemon is too wide to maintin aspect ratio.
-        if (oldHeightFactor < 1 && canvas.width > canvas.height) {
-            artBox.style.height = `${canvas.height}px`;
-        } else if (canvas.offsetWidth >= artBox.offsetWidth - 30) {
-            console.log('not too big but too wide')
-        } else {
-            artBox.style.height = null;
-        }
-
-        // Remove the event listener for image loading by replacing pokeArt with a cloned node, preventing continuous incrementation of function call.
-        const pokeArtClone = pokeArt.cloneNode(true);
-        pokeArt.parentNode.replaceChild(pokeArtClone, pokeArt);
     });
 
     const pokeName = document.getElementById('poke-name');
@@ -188,9 +176,27 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     }
 }
 
-// Process and redraw poke art and animate man art on image load.
-const processArt = () => {
+let lastPokemon = null;
 
+const resizeArtBox = (data) => {
+
+    console.log(lastPokemon !== data.name);
+
+    const canvas = document.getElementById('poke-art-0');
+    const artBox = document.getElementById('poke-art-box');
+
+    // artBox.style.height = null;
+
+    // Shrink the entire artbox down if pokemon is too wide to maintin aspect ratio.
+    if (canvas.offsetWidth >= artBox.offsetWidth - 30) {
+        console.log('oversized art of', data.name)
+        artBox.style.height = '35vh';
+    } else if (lastPokemon !== data.name) {
+        console.log('art is not too big')
+        artBox.style.height = null;
+    }
+
+    lastPokemon = data.name;
 }
 
 // Add event listener to make convert button convert units to pokemetric.

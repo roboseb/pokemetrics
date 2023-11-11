@@ -118,21 +118,24 @@ body {
 
 .summon {
     transform-origin: bottom;
-    animation: summonOpacity 0.3s cubic-bezier(.13,.71,.47,1.27);
-    animation: summonBounce 0.3s cubic-bezier(.13,.71,.47,1.27);
-}
-
-@keyframes summonOpacity {
-    0% {filter: opacity(0);}
-    100% {filter: opacity(1);}
+    animation: summonBounce 0.3s cubic-bezier(.13,.71,.47,1.27),
+                wobble 1s cubic-bezier(.62,.17,.87,.4) infinite;
 }
 
 @keyframes summonBounce {
-    0% {transform: translate(0, 100%) scale(1, 0.8);}
+    0% {filter: opacity(0); transform: translate(0, 100%) scale(1, 0.8);}
     33% {transform: translate(0, -20%) scale(1, 1.2);}
     66% {transform: translate(0, 10%) scale(1.3, 0.8);}
-    100% {transform: translate(0, 0%) scale(1, 1);}
+    100% {filter: opacity(1); transform: translate(0, 0%) scale(1, 1);}
 }
+
+/* @keyframes wobble {
+    0% {transform: rotate(0deg);}
+    25% {transform: rotate(10deg) translate(10%);}
+    50% {transform: rotate(0deg) translate(0%);}
+    75% {transform: rotate(-10deg) translate(-10%);;}
+    100% {transform: rotate(0deg);}
+} */
 
 /* Select for all poke art that are not the first in stack. */
 .art-wrapper:not(:first-child):nth-child(odd)>.unsummon {
@@ -177,7 +180,7 @@ body {
 
 .man-snap {
     transform-origin: bottom;
-    animation: man-snap 0.5s cubic-bezier(.08,.66,.15,1.0);
+    animation: man-snap 0.5s cubic-bezier(.08,.66,.15,1.0) 0.1s;
 }
 
 @keyframes man-snap {
