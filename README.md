@@ -102,6 +102,14 @@ November 10th, 2023
 
     Didn't have my rockstar this morning, but I'll power through anyway. Big goal today is fixing the sizing bug somehow and finalizing the animations in the display before styling the rest.
 
+November 13th, 2023
+
+    Was pretty productive last week. Hoping I can keep that up an finish this project by the end of the week so I can learn blender and make a video for it by the end of next week. 20 hours is hopefully a lot of time for what I have left.
+
+    First order of business is fixing this minor bug when switching between two resized pokemon. Then to general styling and crushing the to-do list.
+
+    I removed the transition animation between different pokemon sizes and had the box reset when changing pokemon. This seems to have fixed my issue but I may look into a better fix so I can keep the animation.
+
 --To-Do--
 
 DONE-basic inputs
@@ -118,7 +126,7 @@ DONE-show pokemon stats
 DONE-unit options (default metric?)
 DONE-person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
 -error message for pokemon not found
--figure out how to pluralize
+-figure out how to pluralize with s or x
 -show height/show weight toggle
 DONE-avoid recursion on infinite .catch for fetch
 -mobile layout
@@ -132,18 +140,18 @@ DONE-use canvas and trim canvas to stack pokemon
 -hovering over a pokemon in a stack makes all those below stay straighter but those above still wobble
 -fix NaN in size display
 -fix height factor 0 issues?
--transition man size up and down when showing large pokemon
--fix wailord is too long
--fix old pokemon art showing in new size
+DONE-transition man size up and down when showing large pokemon
+DONE-fix wailord is too long
+DONE-fix old pokemon art showing in new size
 -error modals
 -fix art with issues - skarmory, raikou, dialga, metagross, electivire, muk, onix
 -shadows under pokemon
 -wobble toggle
 -buttons that show specific pokemon, like the biggest or smallest
--fix man not transitioning
--app gets slower as you use it?
--possibly fix pokemon not being removed if next loads too quickly
--summonOpacity class is being overwritten
+DONE-fix man not transitioning
+DONE-app gets slower as you use it?
+DONE-possibly fix pokemon not being removed if next loads too quickly
+DONE-summonOpacity class is being overwritten
 -man snapped animation relative to pokemon weight relative to user weight?
 -random pokemon button
 -add splash effect for pokemon summon
@@ -152,6 +160,9 @@ DONE-use canvas and trim canvas to stack pokemon
 -fix bug with ratio of 0 (eternatus cm)
 -randomized based on generation button
 -fix bug with art box not resizing in certain cases
+-only show wobble button with multiple pokemon
+-transition bug when switching from large to small pokemon
+-fix man not following art box (don't clear everything!)
 
 things done today
 

@@ -28,6 +28,8 @@ body {
 #content {
     display: flex;
     flex-grow: 1;
+
+    overflow: hidden;
 }
 
 #inputs {
@@ -83,7 +85,6 @@ body {
 
 #art-box-wrapper {
     position: relative;
-    overflow: hidden;
 }
 
 #poke-art-box {
@@ -99,8 +100,21 @@ body {
     padding: 10px;
     border-radius: 10px;
     border: 5px solid black;
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.25s cubic-bezier(.04,.96,.58,1.18);
+}
+
+#poke-art-box.wobbling {
+    transform: translate(5%, 0);
+}
+
+#poke-art-box.wobbling-left {
+    transform: translate(-5%, 0);
+}
+
+@keyframes shake {
+    0% {transform: translate(0%, 0);}
+    50% {transform: translate(5%, 0);}
+    100% {transform: translate(0%, 0);}
 }
 
 .art-wrapper {
@@ -114,12 +128,14 @@ body {
     height: 100%;
     max-height: 100%;
     max-width: 100%;
+    
+    position: relative;
+    z-index: 2;
 }
 
 .summon {
     transform-origin: bottom;
-    animation: summonBounce 0.3s cubic-bezier(.13,.71,.47,1.27),
-                wobble 1s cubic-bezier(.62,.17,.87,.4) infinite;
+    animation: summonBounce 0.3s cubic-bezier(.13,.71,.47,1.27);
 }
 
 @keyframes summonBounce {
@@ -129,13 +145,32 @@ body {
     100% {filter: opacity(1); transform: translate(0, 0%) scale(1, 1);}
 }
 
-/* @keyframes wobble {
-    0% {transform: rotate(0deg);}
-    25% {transform: rotate(10deg) translate(10%);}
-    50% {transform: rotate(0deg) translate(0%);}
-    75% {transform: rotate(-10deg) translate(-10%);;}
-    100% {transform: rotate(0deg);}
-} */
+.art-wrapper:first-child {
+    position: relative;
+}
+
+.art-wrapper:first-child::before {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+
+    height: 10%;
+    width: 30%;
+    border-radius: 100%;
+    z-index: 0;
+
+    border: 5px solid rgba(0, 0, 0, 0);
+    animation: splash 0.5s linear forwards 0.2s;
+
+    transform: translate(-50%, 0%);
+}
+
+@keyframes splash {
+    0% {border: 0px solid rgba(0, 0, 0, 0.541); width: 30%;}
+    25% {border: 5px solid rgba(0, 0, 0, 0.5); width: 40%;}
+    100% {border: 2px solid rgba(0, 0, 0, 0); width: 70%;}
+}
 
 /* Select for all poke art that are not the first in stack. */
 .art-wrapper:not(:first-child):nth-child(odd)>.unsummon {
@@ -168,6 +203,37 @@ body {
     100% {filter: opacity(0); transform: translate(0, 200%) scale(50%, 100%);}
 }
 
+#art-wrapper-0 {
+    position: relative;
+    transition: all 0.3s cubic-bezier(.12,.81,.28,1);
+}
+
+.art-wrapper:not(#art-wrapper-0) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(0%, calc(-100% + 12px));
+
+    height: 100%;
+    transition: all 0.3s cubic-bezier(.12,.81,.28,1);
+}
+
+#poke-art-box .wobbling .art-wrapper {
+    transform: translate(10%, calc(-100% + 12px)) rotate(5deg);
+}
+
+#poke-art-box .wobbling-left .art-wrapper {
+    transform: translate(-10%, calc(-100% + 12px)) rotate(-5deg);
+}
+
+#poke-art-box .wobbling {
+    transform: rotate(5deg);
+}
+
+#poke-art-box .wobbling-left {
+    transform: rotate(-5deg);
+}
+
 #man-art {
     position: absolute;
     bottom: 10px;
@@ -175,7 +241,16 @@ body {
 
     height: var(--man-art-height);
     opacity: 0.7;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    z-index: 2;
+}
+
+#man-art.wobbling {
+    transform: rotate(5deg);
+}
+
+#man-art.wobbling-left {
+    transform: rotate(-5deg);
 }
 
 .man-snap {

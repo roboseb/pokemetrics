@@ -99,6 +99,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
         for (let i = 0; i < heightFactor; i++) {
             const wrapper = document.createElement('div');
             wrapper.classList.add('art-wrapper');
+            wrapper.id = (`art-wrapper-${i}`);
 
             const canvas = document.createElement('canvas');
             //canvas.classList.add('poke-art');
@@ -122,7 +123,16 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
                 trimmedCanvas.style.opacity = null;
             }, i * 100 + 100)
 
-            pokeArtBox.appendChild(wrapper);
+
+
+
+            if (i > 0) {
+                const previousWrapper = document.getElementById(`art-wrapper-${i - 1}`);
+                previousWrapper.appendChild(wrapper);
+            } else {
+                pokeArtBox.appendChild(wrapper);
+            }
+
             wrapper.appendChild(trimmedCanvas);
         }
 
@@ -141,7 +151,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
             r.style.setProperty('--man-art-height', `calc(100% - 20px)`);
         }
 
-        resizeArtBox(data);
+        resizeArtBox(data, inverseRatio);
         animateManSnap();
     });
 
@@ -180,19 +190,17 @@ let lastPokemon = null;
 
 const resizeArtBox = (data) => {
 
-    console.log(lastPokemon !== data.name);
-
     const canvas = document.getElementById('poke-art-0');
     const artBox = document.getElementById('poke-art-box');
 
-    // artBox.style.height = null;
+    artBox.style.height = null;
 
     // Shrink the entire artbox down if pokemon is too wide to maintin aspect ratio.
     if (canvas.offsetWidth >= artBox.offsetWidth - 30) {
-        console.log('oversized art of', data.name)
+        //console.log('oversized art of', data.name)
         artBox.style.height = '35vh';
     } else if (lastPokemon !== data.name) {
-        console.log('art is not too big')
+        //console.log('art is not too big of ' + data.name)
         artBox.style.height = null;
     }
 
@@ -303,3 +311,58 @@ defPokemonBtns.forEach(button => {
         convertToPokemon(false, button.dataset.name);
     })
 });
+
+let wobbleTimeout;
+let shakeTimeout;
+let manTimeout;
+
+// Add wobble animation event listener to wobble button.
+const wobbleBtn = document.getElementById('wobble-btn');
+wobbleBtn.addEventListener('click', () => {
+    const wrapper = document.getElementById('art-wrapper-0');
+    const artBox = document.getElementById('poke-art-box');
+    const manArt = document.getElementById('man-art');
+    const array = [wrapper, artBox, manArt];
+    
+    if (wrapper.classList.contains('wobbling')) {
+        array.forEach(item => {
+            item.classList.remove('wobbling');
+            item.classList.add('wobbling-left');
+        });
+
+    } else if (wrapper.classList.contains('wobbling-left')) {
+        array.forEach(item => {
+            item.classList.remove('wobbling-left');
+            item.classList.add('wobbling');
+        });
+    } else {
+        array.forEach(item => {
+            item.classList.add('wobbling');
+        });
+    }    
+
+    clearTimeout(wobbleTimeout);
+    wobbleTimeout = setTimeout(resetWrapper, 300);
+
+    clearTimeout(shakeTimeout);
+    shakeTimeout = setTimeout(resetArtBox, 250);
+
+    clearTimeout(manTimeout);
+    manTimeout = setTimeout(resetManArt, 250)
+
+});
+
+const resetWrapper = () => {
+    const wrapper = document.getElementById('art-wrapper-0');
+    wrapper.classList.remove('wobbling', 'wobbling-left');
+}
+
+const resetArtBox = () => {
+    const artBox = document.getElementById('poke-art-box');
+    artBox.classList.remove('wobbling', 'wobbling-left');
+}
+
+const resetManArt = () => {
+    const manArt = document.getElementById('man-art');
+    manArt.classList.remove('wobbling', 'wobbling-left');
+}
