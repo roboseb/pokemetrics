@@ -36,12 +36,11 @@ body {
     padding: 10px;
     background-color: salmon;
 
-    flex-grow: 1;
+    flex: 1;
 }
 
 .form-box {
     display: flex;
-    justify-content: space-between;
 
     position: relative;
 }
@@ -60,6 +59,36 @@ body {
     background-color: rgb(22, 70, 43);
     color: WHITE;
     padding: 10px;
+    position: relative;
+
+    overflow: hidden;
+}
+
+#modal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    color: black;
+    background-color: rgba(255, 255, 255, 0.596);
+    backdrop-filter: blur(5px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transform: translate(0%, 100%);
+}
+
+#modal-wrapper.shown {
+    transform: translate(0%, 0%);
+}
+
+#random-gen-btns {
+    margin-top: 10px;
 }
 
 #display {
@@ -149,7 +178,7 @@ body {
     position: relative;
 }
 
-.art-wrapper:first-child::before {
+#art-wrapper-0::before {
     content: '';
     position: absolute;
     bottom: -7px;
@@ -158,7 +187,7 @@ body {
     height: 10%;
     width: 30%;
     border-radius: 100%;
-    z-index: 0;
+    z-index: 1;
 
     border: 5px solid rgba(0, 0, 0, 0);
     animation: splash 0.5s linear forwards 0.2s;
@@ -170,6 +199,46 @@ body {
     0% {border: 0px solid rgba(0, 0, 0, 0.541); width: 30%;}
     25% {border: 5px solid rgba(0, 0, 0, 0.5); width: 40%;}
     100% {border: 2px solid rgba(0, 0, 0, 0); width: 70%;}
+}
+
+#art-wrapper-0::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+
+    height: 7%;
+    width: 40%;
+    border-radius: 100%;
+    z-index: 0;
+
+    animation: shadow 0.3s cubic-bezier(0,.75,.33,1.26);
+    background-color: black;
+
+    transform: translate(-50%, 0%);
+    filter: opacity(0.3);
+    transition: all 0.3s cubic-bezier(0,.75,.33,1.26);
+}
+
+@keyframes shadow {
+    0% {transform: translate(-50%, 0%) scale(0.01, 1); filter: opacity(0);}
+    100% {transform: translate(-50%, 0%) scale(1, 1); filter: opacity(0.3);}
+}
+
+#art-wrapper-0.unsummon-wrapper::after {
+    transform: translate(-50%, 100%) scale(1, 1); filter: opacity(0);
+}
+
+#art-wrapper-0.wobbling::after {
+    transform-origin: bottom right;
+    transform: translate(-50%, -20%) rotate(-5deg) scale(1.1, 1) ;
+    filter: opacity(0.25);
+}
+
+#art-wrapper-0.wobbling-left::after {
+    transform-origin: top right;
+    transform: translate(-50%, 30%) rotate(5deg) scale(0.9, 1);
+    filter: opacity(0.35);
 }
 
 /* Select for all poke art that are not the first in stack. */
@@ -205,7 +274,6 @@ body {
 
 #art-wrapper-0 {
     position: relative;
-    transition: all 0.3s cubic-bezier(.12,.81,.28,1);
 }
 
 .art-wrapper:not(#art-wrapper-0) {
@@ -214,7 +282,10 @@ body {
     left: 0;
     transform: translate(0%, calc(-100% + 12px));
 
-    height: 100%;
+    height: 100%;  
+}
+
+#poke-art-box .transitioned .art-wrapper, #poke-art-box .transitioned{
     transition: all 0.3s cubic-bezier(.12,.81,.28,1);
 }
 
@@ -242,15 +313,15 @@ body {
     height: var(--man-art-height);
     opacity: 0.7;
     transition: all 0.25s ease-in-out;
-    z-index: 2;
+    z-index: 3;
 }
 
 #man-art.wobbling {
-    transform: rotate(5deg);
+    transform: rotate(10deg);
 }
 
 #man-art.wobbling-left {
-    transform: rotate(-5deg);
+    transform: rotate(-10deg);
 }
 
 .man-snap {

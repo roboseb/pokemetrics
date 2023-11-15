@@ -110,6 +110,16 @@ November 13th, 2023
 
     I removed the transition animation between different pokemon sizes and had the box reset when changing pokemon. This seems to have fixed my issue but I may look into a better fix so I can keep the animation.
 
+November 14th, 2023
+
+    Cough has not massively improved, but I'm feeling pretty good. Gonna fix one of the final resizing issues then get through some bug fixes before introducing some real styling and UI/UX.
+
+November 15th, 2023
+
+    Ended work on this early yesterday cause I was helping my mom move. Her sister's car broke down, so what should have been done quickish took us almost 10 hours. Regardless, I'm back and there's yet work to do.
+
+    Gonna start by I think adding feet and inches at least for the pokemon's displayed info.
+
 --To-Do--
 
 DONE-basic inputs
@@ -120,13 +130,13 @@ DONE-average both
 DONE-show pokemon stats
 -custom font
 -three.js integration
--prevent errors for unexpected input
+DONE-prevent errors for unexpected input
 -verify fetches are sanitized with input
--implement constraints for height/weight/pokemon name length
+DONE-implement constraints for height/weight/pokemon name length
 DONE-unit options (default metric?)
 DONE-person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
--error message for pokemon not found
--figure out how to pluralize with s or x
+DONE-error message for pokemon not found
+DONE-figure out how to pluralize with s or x
 -show height/show weight toggle
 DONE-avoid recursion on infinite .catch for fetch
 -mobile layout
@@ -135,37 +145,49 @@ DONE-avoid recursion on infinite .catch for fetch
 -localstorage to save units
 -tierzoo attack animations
 -throw multiple pokeballs to show how many pokemon
--add feet and inches
+DONE-add feet and inches
 DONE-use canvas and trim canvas to stack pokemon
--hovering over a pokemon in a stack makes all those below stay straighter but those above still wobble
--fix NaN in size display
--fix height factor 0 issues?
+CANCEL-hovering over a pokemon in a stack makes all those below stay straighter but those above still wobble
+DONE-fix NaN in size display
+DONE-fix height factor 0 issues?
 DONE-transition man size up and down when showing large pokemon
 DONE-fix wailord is too long
 DONE-fix old pokemon art showing in new size
--error modals
--fix art with issues - skarmory, raikou, dialga, metagross, electivire, muk, onix
--shadows under pokemon
--wobble toggle
+DONE-error modals
+DONE-fix art with issues - skarmory, raikou, dialga, metagross, electivire, muk, onix
+DONE-shadows under pokemon
+CANCEL?-wobble toggle
 -buttons that show specific pokemon, like the biggest or smallest
 DONE-fix man not transitioning
 DONE-app gets slower as you use it?
 DONE-possibly fix pokemon not being removed if next loads too quickly
 DONE-summonOpacity class is being overwritten
--man snapped animation relative to pokemon weight relative to user weight?
--random pokemon button
--add splash effect for pokemon summon
+CANCEL-man snapped animation relative to pokemon weight relative to user weight?
+DONE-random pokemon button
+DONE-add splash effect for pokemon summon
 -pokeball art
--wait to finish unsummon animation before summon
--fix bug with ratio of 0 (eternatus cm)
--randomized based on generation button
--fix bug with art box not resizing in certain cases
--only show wobble button with multiple pokemon
--transition bug when switching from large to small pokemon
--fix man not following art box (don't clear everything!)
+CANCEL-wait to finish unsummon animation before summon
+DONE-randomized based on generation button
+DONE?-fix bug with art box not resizing in certain cases
+CANCEL-only show wobble button with multiple pokemon
+DONE-transition bug when switching from large to small pokemon
+DONE-fix man not following art box (don't clear everything!)
+-add links to my github/twitter/youtube/whatever
+-add option to remove constraints, possibly crashing the site
+-save pokemon as favourite + local storage
+-dark mode and localdata for mode choice
+-clear local storage button
+-tooltips for different options
+
 
 things done today
-
+remove resized art bug when going from big to small, leading to display resizing issues
+moved manart back into main display to connect it for wobble
+fixed nan display bug on random pokemon
+fixed weight rounding < 0.1 to 0.1 to avoid infinity
+changed imperial unit display for pokemon to feet and inches
+-add shadow and corresponding animations
+-added buttons for random pokemon and random pokemon by gen
 
 --Credits--
 

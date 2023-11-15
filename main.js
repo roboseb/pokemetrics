@@ -17,12 +17,24 @@ async function convertToPokemon(randomized, pokemon) {
         throw new Error('Something went wrong');
     })
         .then((data) => {
-            // Compare user metrics to pokemon size and display info.
-            convert(data);
+
+            // If the data returned is not a pokemon, prevent furthur operation unless randomized is true.
+            if (!data.name) {
+                console.log('pokemon not found, selecting at random');
+                if (!randomized) {
+                    convertToPokemon(true);
+                    displayModal('Name input blank, converting random pokemon...')
+                }
+
+            } else {
+                // Compare user metrics to pokemon size and display info.
+                convert(data);
+            }
+
         })
         .catch((error) => {
             console.log(error)
-            console.log('pokemon not found, selecting at random');
+            displayModal('Pokemon not found, fetching one at random...')
             if (!randomized) convertToPokemon(true);
         });
 }
@@ -32,7 +44,9 @@ convertToPokemon(false);
 
 // Consider entered weight and chosen pokemon and convert to pokemetric.
 const convert = (data) => {
-    //console.log(data);
+
+    if (!validateMeasurement()) return;
+
     let userHeight = document.getElementById('height-input').value;
     let userWeight = document.getElementById('weight-input').value;
 
@@ -44,13 +58,14 @@ const convert = (data) => {
 
     // Check what info the user has entered and convert accordingly.
     if (userHeight !== '') {
-        const heightFactor = (userHeight / (data.height * 10)).toFixed(1);
-        displayResult(data, `You are as tall as ${heightFactor} ${data.name}s.`, 'height', heightFactor);
+        let heightFactor = (userHeight / (data.height * 10)).toFixed(1);
+        if (heightFactor <= 0) heightFactor = 0.1;
+        displayResult(data, `You are as tall as ${heightFactor} ${data.name}${pluralize(data.name)}.`, 'height', heightFactor);
     }
 
     if (userWeight !== '') {
         const weightFactor = (userWeight / (data.weight / 10)).toFixed(1);
-        displayResult(data, `You are as heavy as ${weightFactor} ${data.name}s.`, 'weight');
+        displayResult(data, `You are as heavy as ${weightFactor} ${data.name}${pluralize(data.name)}.`, 'weight');
     }
 }
 
@@ -93,7 +108,10 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     pokeArt.addEventListener("load", (e) => {
 
         // Clear all previous art from the box.
-        pokeArtBox.textContent = '';
+        const wrapperArray = Array.from(document.querySelectorAll('.art-wrapper'));
+        wrapperArray.forEach(wrapper => {
+            wrapper.remove();
+        });
 
         // Clone the poke art for as many times bigger you are than it.
         for (let i = 0; i < heightFactor; i++) {
@@ -156,7 +174,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     });
 
     const pokeName = document.getElementById('poke-name');
-    pokeName.innerText = data['name'];
+    pokeName.innerText = data['name'].charAt(0).toUpperCase() + data['name'].slice(1);
 
     const pokeNumber = document.getElementById('poke-number');
     pokeNumber.innerText = `#${data['id']}`;
@@ -181,7 +199,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     weight.innerText = `${data['weight'] / 10} kg`;
 
     if (units === 'imperial') {
-        height.innerText = `${(data['height'] * 10 * 0.393701).toFixed(0)} in`;
+        height.innerText = `${convertInches((data['height'] * 10 * 0.393701).toFixed(0))}`;
         weight.innerText = `${(data['weight'] / 10 * 2.20462).toFixed(0)} lb`;
     }
 }
@@ -273,7 +291,7 @@ const switchUnits = () => {
     let newWeight = pokeWeight.innerText.split(' ')[0];
 
     if (units === 'metric') {
-        pokeHeight.innerText = `${(newHeight * 0.393701).toFixed(0)} in`
+        pokeHeight.innerText = `${convertInches((newHeight * 0.393701).toFixed(0))}`
         pokeWeight.innerText = `${(newWeight * 2.20462).toFixed(0)} lbs`
         units = 'imperial';
     } else {
@@ -282,6 +300,14 @@ const switchUnits = () => {
         units = 'metric';
     }
 }
+
+// Convert an amount of inches into feet and inches.
+const convertInches = (inches) => {
+    let feet = Math.floor(inches / 12);
+    let inchesLeft = inches % 12;
+    return `${feet}' ${inchesLeft}''`
+}
+
 // Animate pokemon leaving the display.
 const animateUnsummon = () => {
     const shownArt = Array.from(document.querySelectorAll('.poke-art'));
@@ -289,6 +315,8 @@ const animateUnsummon = () => {
         art.classList.remove('summon');
         art.classList.add('unsummon');
     });
+    const firstWrapper = document.getElementById('art-wrapper-0');
+    firstWrapper.classList.add('unsummon-wrapper');
 }
 
 // Animate the man being snapped back and forth by the summoning of pokemon.
@@ -312,6 +340,40 @@ defPokemonBtns.forEach(button => {
     })
 });
 
+// Load a random pokemon from a given generation.
+const randomGenBtns = Array.from(document.querySelectorAll('.random-gen-btn'));
+randomGenBtns.forEach(button => {
+    button.addEventListener('click', () => {
+        animateUnsummon();
+
+        // Get a random pokemon ID based on generation start and end data.
+        const choice = Math.floor(Math.random() * (button.dataset.end - button.dataset.start + 1)) + parseInt(button.dataset.start);
+        convertToPokemon(false, choice);
+    })
+});
+
+// Load a completely random pokemon
+const randomBtn = document.getElementById('random-pokemon-btn')
+randomBtn.addEventListener('click', () => {
+    animateUnsummon();
+    convertToPokemon(true);
+})
+
+// let oneCount = 0;
+// let bigCount = 0;
+
+// const rngTester = (min, max) => {
+//     const choice = Math.floor(Math.random() * (max - min + 1) + min);
+//     if (choice == 0) oneCount++;
+//     if (choice == 152) bigCount++;
+// }
+
+// for (let i = 0; i < 500; i++) {
+//     rngTester(1, 151);
+// }
+
+// console.log(oneCount, bigCount)
+
 let wobbleTimeout;
 let shakeTimeout;
 let manTimeout;
@@ -323,7 +385,7 @@ wobbleBtn.addEventListener('click', () => {
     const artBox = document.getElementById('poke-art-box');
     const manArt = document.getElementById('man-art');
     const array = [wrapper, artBox, manArt];
-    
+
     if (wrapper.classList.contains('wobbling')) {
         array.forEach(item => {
             item.classList.remove('wobbling');
@@ -338,8 +400,11 @@ wobbleBtn.addEventListener('click', () => {
     } else {
         array.forEach(item => {
             item.classList.add('wobbling');
+
+            // Add a class to poke art to prevent transitioning from large to small poke art, breaking the size check.
+            wrapper.classList.add('transitioned');
         });
-    }    
+    }
 
     clearTimeout(wobbleTimeout);
     wobbleTimeout = setTimeout(resetWrapper, 300);
@@ -365,4 +430,44 @@ const resetArtBox = () => {
 const resetManArt = () => {
     const manArt = document.getElementById('man-art');
     manArt.classList.remove('wobbling', 'wobbling-left');
+}
+
+let modalTimeout
+
+// Display modal messages for errors and other information
+const displayModal = (message) => {
+    const modal = document.getElementById('modal-wrapper');
+    modal.innerText = message;
+    modal.classList.add('shown');
+    clearTimeout(modalTimeout);
+    modalTimeout = setTimeout(resetModal, 1500)
+}
+
+const resetModal = () => {
+    const modal = document.getElementById('modal-wrapper');
+    modal.classList.remove('shown');
+}
+
+// Verify that entered weight and height are within constraints, preventing loading too many images for display.
+const validateMeasurement = () => {
+    let userHeight = document.getElementById('height-input').value;
+    let userWeight = document.getElementById('weight-input').value;
+
+    if (userHeight > 400 || userWeight > 1000) {
+        displayModal('Please enter a weight under 1000 and a height under 400.')
+        return false;
+    } else {
+        return true;
+    }
+}
+
+// Return a letter to pluralize a pokemon name based on its termination.
+const pluralize = (name) => {
+    const finalLetter = name.slice(-1);
+    let letter = 's';
+
+    if (finalLetter == 's' || finalLetter == 'x') {
+        letter = 'es'
+    }
+    return letter;
 }
