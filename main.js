@@ -95,6 +95,9 @@ const displayResult = (data, message, metric, heightFactor) => {
     displayPokeInfo(data, newHeightFactor, heightFactor, inverseRatio);
 }
 
+let lastWeight;
+let lastHeight;
+
 // Primary function for diplaying fetched pokemon info.
 const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
 
@@ -194,9 +197,11 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
 
     const height = document.getElementById('poke-height');
     height.innerText = `${data['height'] * 10} cm`;
+    lastHeight = data['height'] * 10;
 
     const weight = document.getElementById('poke-weight');
     weight.innerText = `${data['weight'] / 10} kg`;
+    lastWeight = data['weight'] / 10;
 
     if (units === 'imperial') {
         height.innerText = `${convertInches((data['height'] * 10 * 0.393701).toFixed(0))}`;
@@ -291,12 +296,12 @@ const switchUnits = () => {
     let newWeight = pokeWeight.innerText.split(' ')[0];
 
     if (units === 'metric') {
-        pokeHeight.innerText = `${convertInches((newHeight * 0.393701).toFixed(0))}`
-        pokeWeight.innerText = `${(newWeight * 2.20462).toFixed(0)} lbs`
+        pokeHeight.innerText = `${convertInches((lastHeight * 0.393701).toFixed(0))}`
+        pokeWeight.innerText = `${(lastWeight * 2.20462).toFixed(0)} lbs`
         units = 'imperial';
     } else {
-        pokeHeight.innerText = `${(newHeight * 2.54).toFixed(0)} cm`
-        pokeWeight.innerText = `${(newWeight * 0.453592).toFixed(0)} kg`
+        pokeHeight.innerText = `${lastHeight} cm`
+        pokeWeight.innerText = `${lastWeight} kg`
         units = 'metric';
     }
 }
@@ -448,6 +453,16 @@ const resetModal = () => {
     modal.classList.remove('shown');
 }
 
+// Add flicker animations to zelda style buttons on click.
+const zeldaBtns = Array.from(document.querySelectorAll('.zelda-btn'));
+zeldaBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        btn.classList.remove('flicker');
+        void btn.offsetWidth;
+        btn.classList.add('flicker');
+    })
+});
+
 // Verify that entered weight and height are within constraints, preventing loading too many images for display.
 const validateMeasurement = () => {
     let userHeight = document.getElementById('height-input').value;
@@ -470,4 +485,23 @@ const pluralize = (name) => {
         letter = 'es'
     }
     return letter;
+}
+
+// Move the unit of measurement over based on input value size.
+const adjustUnit = (input) => {
+    const unit = input.parentElement.querySelector('.unit-box');
+    unit.style.left = `${input.value.length + 1}ch`;
+}
+
+const inputs = [document.getElementById('height-input'), document.getElementById('weight-input')];
+inputs.forEach(input => {
+    adjustUnit(input)
+    input.addEventListener('input', () => {
+        adjustUnit(input);
+    })
+});
+
+// Add corners for animation of zelda styled buttons.
+const addCorners = () => {
+
 }

@@ -120,6 +120,10 @@ November 15th, 2023
 
     Gonna start by I think adding feet and inches at least for the pokemon's displayed info.
 
+November 16th, 2023
+
+    I found this cool site called interfaceingame.com that basically just has clips and screenshots of in game UIs, very handy for informing some styling.
+
 --To-Do--
 
 DONE-basic inputs
@@ -178,16 +182,12 @@ DONE-fix man not following art box (don't clear everything!)
 -dark mode and localdata for mode choice
 -clear local storage button
 -tooltips for different options
+-favicon
+-custom cursor?
+DONE-fix unit change bug
 
 
 things done today
-remove resized art bug when going from big to small, leading to display resizing issues
-moved manart back into main display to connect it for wobble
-fixed nan display bug on random pokemon
-fixed weight rounding < 0.1 to 0.1 to avoid infinity
-changed imperial unit display for pokemon to feet and inches
--add shadow and corresponding animations
--added buttons for random pokemon and random pokemon by gen
 
 --Credits--
 
@@ -196,3 +196,7 @@ https://ourcodeworld.com/articles/read/683/how-to-remove-the-transparent-pixels-
 man outline art
 
 <a href="https://www.vecteezy.com/free-vector/man-silhouette">Man Silhouette Vectors by Vecteezy</a>
+
+(add credits for fonts here, 
+    france by vladimir nikolic
+)

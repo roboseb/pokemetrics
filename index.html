@@ -16,33 +16,60 @@
         </div>
 
         <div id="content">
-            <div id="inputs">
+            <div id="options">
                 <h2>Options</h2>
-                <form action="">
-                    <div class="form-box">
-                        <label for="poke-name-input">Pokemon Name</label>
-                        <input type="text" id='poke-name-input' value='azurill'>
-                    </div>
-                    <div class="form-box">
-                        <label for="height-input">Your Height</label>
-                        <input type="number" id='height-input' min='1' max='400' value="72">
-                        <div class="unit-box" id="height-unit">cm</div>
-                    </div>
+                <div id="options-form-wrapper">
+                    <form action="" id='options-form'>
+                        <div class="form-box">
 
-                    <div class="form-box">
-                        <label for="weight-input">Your Weight</label>
-                        <input type="number" id='weight-input' min="1" max='1000' value='200'>
-                        <div class="unit-box" id='weight-unit'>kg</div>
+                            <label for="poke-name-input">Pokemon Name</label>
+                            <div class="input-box">
+                                <input type="text" id='poke-name-input' value='azurill'>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <label for="height-input">Your Height</label>
+                            <div class="input-box">
+                                <input type="number" id='height-input' min='1' max='400' value="72">
+                                <div class="unit-box" id="height-unit">cm</div>
+                            </div>
+                            
+                            
+                        </div>
+    
+                        <div class="form-box">
+                            <label for="weight-input">Your Weight</label>
+                            <div class="input-box">
+                                <input type="number" id='weight-input' min="1" max='1000' value='200'>
+                                <div class="unit-box" id='weight-unit'>kg</div>
+                            </div>
+                            
+                            
+                        </div>
+                    </form>
+
+                    <div id="unit-btn-box">
+                        <div id="btn-padding">Name</div>
+                        <button type='button' id='unit-btn' class='zelda-btn'>
+                            <div class="btn-text">Change<br> Units</div>
+                            <div class="corner corner-1"></div>
+                            <div class="corner corner-2"></div>
+                            <div class="corner corner-3"></div>
+                            <div class="corner corner-4"></div>
+                        </button>
                     </div>
+                    
+                </div>
 
-                    <div id="options-box">
-                        <button type='button' id='convert-btn'>Convert to Pokemon</button>
-                        <button type='button' id='closest-btn'>Closest</button>
-                        <button type='button' id='unit-btn'>Change Units</button>
-                    </div>
+                <div id="options-box">
+                    <button type='button' id='convert-btn' class='zelda-btn'>
+                        <div class="btn-text">Convert</div>
+                    </button>
+                    <button type='button' id='closest-btn' class='zelda-btn'>
+                        <div class="btn-text">Closest</div>
+                    </button>
+                </div>
 
-
-                </form>
 
                 <div id="result-info">
                     <div id="height-result"></div>
