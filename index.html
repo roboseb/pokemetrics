@@ -13,6 +13,7 @@
     <div id="main">
         <div id="header">
             <h1>Pokemetric!</h1>
+            <button id='help-btn'>?</button>
         </div>
 
         <div id="content">
@@ -52,11 +53,11 @@
                         <div id="btn-padding">Name</div>
                         <button type='button' id='unit-btn' class='zelda-btn'>
                             <div class="btn-text">Change<br> Units</div>
-                            <div class="corner corner-1"></div>
-                            <div class="corner corner-2"></div>
-                            <div class="corner corner-3"></div>
-                            <div class="corner corner-4"></div>
                         </button>
+                    </div>
+
+                    <div class="help">
+                        <div>Enter a pokemon's name to show its relative size. Units can be toggled between metric and imperial. Weight and height are limited to manage performance.</div>
                     </div>
                     
                 </div>
@@ -68,39 +69,91 @@
                     <button type='button' id='closest-btn' class='zelda-btn'>
                         <div class="btn-text">Closest</div>
                     </button>
+                    <div class="help">
+                        <div>Convert to pokemon or find the closest to your size.</div>
+                    </div>
                 </div>
 
 
-                <div id="result-info">
+                <!-- <div id="result-info">
                     <div id="height-result"></div>
                     <div id="weight-result"></div>
                     <div id="modal-wrapper">
                         <div id="modal-message">This is a modal</div>
                     </div>
+                </div> -->
+                <div id="result-info-wrapper">
+                    <div id="result-info">
+                        <div id="console-box"></div>
+                    </div>
                 </div>
 
+
                 <div id="def-pokemon-btns">
-                    <button class="def-pokemon-btn" data-name='dialga'>Dialga</button>
-                    <button class="def-pokemon-btn" data-name='palkia'>Palkia</button>
-                    <button class="def-pokemon-btn" data-name='azurill'>Azurill</button>
-                    <button class="def-pokemon-btn" data-name='electivire'>Electivire</button>
-                    <button class="def-pokemon-btn" data-name='onix'>Onix</button>
-                    <button class="def-pokemon-btn" data-name='muk'>Muk</button>
-                    <button class="def-pokemon-btn" data-name='eternatus'>Eternatus</button>
-                    <button id="wobble-btn">Wobble</button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='dialga'>
+                        <div class="btn-text">Dialga</div>
+                    </button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='palkia'>
+                        <div class="btn-text">Palkia</div>
+                    </button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='azurill'>
+                        <div class="btn-text">Azurill</div>
+                    </button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='electivire'>
+                        <div class="btn-text">Electivire</div>
+                    </button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='onix'>
+                        <div class="btn-text">Onix</div>
+                    </button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='muk'>
+                        <div class="btn-text">Muk</div>
+                    </button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='eternatus'>
+                        <div class="btn-text">Eternatus</div>
+                    </button>
+
+                    <div class="help">
+                        <div>Click on these buttons to instantly convert to some interesting pokemon!</div>
+                    </div>
                 </div>
+
+                <button id="random-pokemon-btn" class='zelda-btn'>
+                    <div class="btn-text">Random Pokemon</div>
+                </button>
+
                 <div id="random-gen-btns">
-                    <button class="random-gen-btn" data-start='1' data-end='151'>Gen 1</button>
-                    <button class="random-gen-btn" data-start='152' data-end='251'>Gen 2</button>
-                    <button class="random-gen-btn" data-start='252' data-end='386'>Gen 3</button>
-                    <button class="random-gen-btn" data-start='387' data-end='493'>Gen 4</button>
-                    <button class="random-gen-btn" data-start='494' data-end='649'>Gen 5</button>
-                    <button class="random-gen-btn" data-start='650' data-end='721'>Gen 6</button>
-                    <button class="random-gen-btn" data-start='722' data-end='809'>Gen 7</button>
-                    <button class="random-gen-btn" data-start='810' data-end='905'>Gen 8</button>
-                    <button class="random-gen-btn" data-start='906' data-end='1017'>Gen 9</button>
+                    <button class="random-gen-btn zelda-btn" data-start='1' data-end='151'>
+                        <div class="btn-text">Gen 1</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='152' data-end='251'>
+                        <div class="btn-text">Gen 2</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='252' data-end='386'>
+                        <div class="btn-text">Gen 3</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='387' data-end='493'>
+                        <div class="btn-text">Gen 4</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='494' data-end='649'>
+                        <div class="btn-text">Gen 5</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='650' data-end='721'>
+                        <div class="btn-text">Gen 6</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='722' data-end='809'>
+                        <div class="btn-text">Gen 7</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='810' data-end='905'>
+                        <div class="btn-text">Gen 8</div>
+                    </button>
+                    <button class="random-gen-btn zelda-btn" data-start='906' data-end='1017'>
+                        <div class="btn-text">Gen 9</div>
+                    </button>
+
+                    <div class="help">
+                        <div>Click on these buttons to convert to a randomly selected pokemon from any generation!</div>
+                    </div>
                 </div>
-                <button id="random-pokemon-btn">Random</button>
             </div>
 
 
@@ -128,6 +181,8 @@
                 </div>
                 <div id="poke-height">60 in</div>
                 <div id="poke-weight">150 lbs</div>
+
+                <button id="wobble-btn">Wobble</button>
 
                 <img id='ref-img' src="" alt="">
 

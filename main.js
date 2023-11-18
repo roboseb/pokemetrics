@@ -23,7 +23,7 @@ async function convertToPokemon(randomized, pokemon) {
                 console.log('pokemon not found, selecting at random');
                 if (!randomized) {
                     convertToPokemon(true);
-                    displayModal('Name input blank, converting random pokemon...')
+                    logMessage('Name input blank, converting random pokemon...', true)
                 }
 
             } else {
@@ -34,7 +34,7 @@ async function convertToPokemon(randomized, pokemon) {
         })
         .catch((error) => {
             console.log(error)
-            displayModal('Pokemon not found, fetching one at random...')
+            logMessage('Pokemon not found, fetching one at random...', true)
             if (!randomized) convertToPokemon(true);
         });
 }
@@ -71,8 +71,7 @@ const convert = (data) => {
 
 // Display unit conversion. 
 const displayResult = (data, message, metric, heightFactor) => {
-    const resultBox = document.getElementById(`${metric}-result`);
-    resultBox.innerText = message;
+    logMessage(message, false);
 
     const pokeArtBox = document.getElementById('poke-art-box');
     const pokeArt = document.querySelector('.art-wrapper');
@@ -360,6 +359,7 @@ randomGenBtns.forEach(button => {
 // Load a completely random pokemon
 const randomBtn = document.getElementById('random-pokemon-btn')
 randomBtn.addEventListener('click', () => {
+    console.log('rolling random')
     animateUnsummon();
     convertToPokemon(true);
 })
@@ -437,20 +437,32 @@ const resetManArt = () => {
     manArt.classList.remove('wobbling', 'wobbling-left');
 }
 
-let modalTimeout
+let messageTimer;
 
 // Display modal messages for errors and other information
-const displayModal = (message) => {
-    const modal = document.getElementById('modal-wrapper');
-    modal.innerText = message;
-    modal.classList.add('shown');
-    clearTimeout(modalTimeout);
-    modalTimeout = setTimeout(resetModal, 1500)
+const logMessage = (message, error) => {
+    const consoleBox = document.getElementById('console-box');
+    const text = document.createElement('div');
+    text.classList.add('console-message');
+    text.innerText = message;
+    consoleBox.appendChild(text);
+
+    if (error) {
+        text.style.color = `var(--magenta)`;
+    }
+
+    clearTimeout(messageTimer);
+    messageTimer = setTimeout(animateMessage, 250);
 }
 
-const resetModal = () => {
-    const modal = document.getElementById('modal-wrapper');
-    modal.classList.remove('shown');
+// Show animation for a message added to the in-app console.
+const animateMessage = () => {
+    const resultInfo = document.getElementById('result-info');
+    resultInfo.scrollTo({
+        top: resultInfo.scrollHeight,
+        left: 0,
+        behavior: 'smooth' 
+    });
 }
 
 // Add flicker animations to zelda style buttons on click.
@@ -469,7 +481,7 @@ const validateMeasurement = () => {
     let userWeight = document.getElementById('weight-input').value;
 
     if (userHeight > 400 || userWeight > 1000) {
-        displayModal('Please enter a weight under 1000 and a height under 400.')
+        logMessage('Please enter a weight under 1000 and a height under 400.', true)
         return false;
     } else {
         return true;
@@ -479,11 +491,13 @@ const validateMeasurement = () => {
 // Return a letter to pluralize a pokemon name based on its termination.
 const pluralize = (name) => {
     const finalLetter = name.slice(-1);
+    const finalTwo = name.slice(-2);
     let letter = 's';
 
-    if (finalLetter == 's' || finalLetter == 'x') {
+    if (finalLetter == 's' || finalLetter == 'x' || finalTwo == 'ch') {
         letter = 'es'
     }
+
     return letter;
 }
 
@@ -503,5 +517,37 @@ inputs.forEach(input => {
 
 // Add corners for animation of zelda styled buttons.
 const addCorners = () => {
-
+    const zeldaBtns = Array.from(document.querySelectorAll('.zelda-btn'));
+    zeldaBtns.forEach(btn => {
+        for (let i = 1; i < 5; i++) {
+            const corner =  document.createElement('div');
+            corner.classList.add('corner', `corner-${i}`);
+            btn.appendChild(corner);
+        }
+    });
 }
+addCorners();
+
+// Add triforce corners to zelda themed help elements.
+const addTriforces = () => {
+    const modals = Array.from(document.querySelectorAll('.help'));
+    modals.forEach(modal => {
+        for (let i = 1; i < 5; i++) {
+            const triforce =  document.createElement('img');
+            triforce.classList.add('triforce', `triforce-${i}`);
+            triforce.src = './images/triforce.png';
+            triforce.alt = '';
+            modal.appendChild(triforce);
+        }
+    });
+}
+addTriforces();
+
+// Toggle visibility on help boxes on button click.
+const helpBtn = document.getElementById('help-btn');
+helpBtn.addEventListener('click', () => {
+    const modals = Array.from(document.querySelectorAll('.help'));
+    modals.forEach(modal => {
+        modal.classList.toggle('shown');
+    });
+});

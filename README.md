@@ -124,6 +124,14 @@ November 16th, 2023
 
     I found this cool site called interfaceingame.com that basically just has clips and screenshots of in game UIs, very handy for informing some styling.
 
+November 17th, 2023
+
+    App is running real slow in the VM since I started styling. Not sure why exactly. Animations and everything are lagging even after updating some VM settings and basically removing all of the new styled stuff. Gonna try hosting it with github to see if it runs ok out of the VM.
+
+    Animations look fine on hosted site. As expected, there are unfortunately a myriad of errors when hosting compared to running locally. So I'll have to deal with those later.
+
+    Pretty easy work styling most of the buttons since I can just copy and paste the zelda btn format and css/JS take care of the rest.
+
 --To-Do--
 
 DONE-basic inputs
@@ -185,9 +193,13 @@ DONE-fix man not following art box (don't clear everything!)
 -favicon
 -custom cursor?
 DONE-fix unit change bug
+-fix errors when being hosted
 
 
 things done today
+style most buttons
+JS function to add corners to zelda buttons
+
 
 --Credits--
 
