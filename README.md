@@ -132,6 +132,10 @@ November 17th, 2023
 
     Pretty easy work styling most of the buttons since I can just copy and paste the zelda btn format and css/JS take care of the rest.
 
+November 20th, 2023
+
+    Styling, mobile layout, and fix the issues when hosted on github. That's what I've got left I think. Now that I'll be doing four hours of work per day it should be done pretty quick. Then the promotion and the video.
+
 --To-Do--
 
 DONE-basic inputs
@@ -194,11 +198,21 @@ DONE-fix man not following art box (don't clear everything!)
 -custom cursor?
 DONE-fix unit change bug
 -fix errors when being hosted
+-update specific pokemon buttons
+-rapidly clicking random breaks height animation
+-add button for switching to sprite art
+pokedex dpad cycles through pokemon by id
+-animations for showing new pokemon
+-clean up fonts folder
+-MUK IS BROKEN AGAIN/mothim/basculegion
+-fix uppercase search glitch
 
 
 things done today
-style most buttons
-JS function to add corners to zelda buttons
+added custom scrollbar to dom console
+style header
+add function for colouring types displayed
+style pokedex. update poke art scaling style. Add logic for coloring pokemon types.
 
 
 --Credits--

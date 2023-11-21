@@ -13,7 +13,18 @@
     <div id="main">
         <div id="header">
             <h1>Pokemetric!</h1>
-            <button id='help-btn'>?</button>
+
+            <div id="header-btns">
+                <button id="wobble-btn" class='zelda-btn'>
+                    <div class="btn-text">Wobble</div>
+                </button>
+                <button id='help-btn' class='zelda-btn'>
+                    <div class="btn-text">?</div>
+                    <div class="help">
+                        <div>Click to hide</div>
+                    </div>
+                </button>
+            </div>
         </div>
 
         <div id="content">
@@ -34,18 +45,18 @@
                                 <input type="number" id='height-input' min='1' max='400' value="72">
                                 <div class="unit-box" id="height-unit">cm</div>
                             </div>
-                            
-                            
+
+
                         </div>
-    
+
                         <div class="form-box">
                             <label for="weight-input">Your Weight</label>
                             <div class="input-box">
                                 <input type="number" id='weight-input' min="1" max='1000' value='200'>
                                 <div class="unit-box" id='weight-unit'>kg</div>
                             </div>
-                            
-                            
+
+
                         </div>
                     </form>
 
@@ -57,9 +68,11 @@
                     </div>
 
                     <div class="help">
-                        <div>Enter a pokemon's name to show its relative size. Units can be toggled between metric and imperial. Weight and height are limited to manage performance.</div>
+                        <div>Enter a pokemon's name to show its relative size. Units can be toggled between metric and
+                            imperial. Weight and height are limited to manage performance.</div>
                     </div>
-                    
+
+
                 </div>
 
                 <div id="options-box">
@@ -154,35 +167,65 @@
                         <div>Click on these buttons to convert to a randomly selected pokemon from any generation!</div>
                     </div>
                 </div>
+
+                <img src="./images/triforce.png" alt="" class="triforce triforce-2">
             </div>
 
 
 
 
-            <div id="display">
-                <div id="poke-name-number">
-                    <h2 id="poke-name">Crustle</h2>
-                    <h2 id='poke-number'>#0558</h2>
+            <div id="pokedex">
+                <div id="pokedex-header">
+                    <div id="pokedex-light-box">
+                        <div id="pokedex-light"></div>
+                        <div id="ryg-box">
+                            <div class="mini-light" id='red-light'></div>
+                            <div class="mini-light" id='yellow-light'></div>
+                            <div class="mini-light" id='green-light'></div>
+                        </div>
+                    </div>
+
                 </div>
+
                 <div id="art-box-wrapper">
+                    <div class='art-padding' id='art-padding-top'></div>
                     <div id="poke-art-box">
                         <div class="art-wrapper">
                             <canvas id="poke-art" class='poke-art'></canvas>
                         </div>
                         <img id="man-art" src="./images/man_outline.png" alt="Black outline of a man">
-                        
                     </div>
-                   
+                    <div class='art-padding' id='art-padding-bottom'></div>
+
                 </div>
 
-                <div id="type-box">
-                    <div id="type-1">Bug</div>
-                    <div id="type-2">Rock</div>
+                <div id="pokedex-controls">
+                    <div id="pokedex-details">
+                        <div id="poke-name-wrapper">
+                            <div id="poke-name">Crustle</div>
+                        </div>
+                        
+                        <div id="other-details">
+                            <div id='poke-number'>#0558</div>
+                            <div id="type-box">
+                                <div id="type-1">Bug</div>
+                                <div id="type-2">Rock</div>
+                            </div>
+    
+                            <div id="poke-height-weight">
+                                <div id="poke-height">60 in</div>
+                                <div id="poke-weight">150 lbs</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dpad-box">
+                        <div id="dpad"></div>
+                        <div class="dpad-btn" id="dpad-up"></div>
+                        <div class="dpad-btn" id="dpad-right"></div>
+                        <div class="dpad-btn" id="dpad-down"></div>
+                        <div class="dpad-btn" id="dpad-left"></div>
+                    </div>
                 </div>
-                <div id="poke-height">60 in</div>
-                <div id="poke-weight">150 lbs</div>
-
-                <button id="wobble-btn">Wobble</button>
 
                 <img id='ref-img' src="" alt="">
 

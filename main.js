@@ -179,7 +179,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     pokeName.innerText = data['name'].charAt(0).toUpperCase() + data['name'].slice(1);
 
     const pokeNumber = document.getElementById('poke-number');
-    pokeNumber.innerText = `#${data['id']}`;
+    pokeNumber.innerText = `${data['id']}`;
 
     const type1 = document.getElementById('type-1');
     type1.innerText = data['types']['0']['type']['name'];
@@ -194,6 +194,8 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
         type2.style.display = 'none';
     }
 
+    updateTypeBoxes(data, Object.keys(data['types']).length > 1);
+
     const height = document.getElementById('poke-height');
     height.innerText = `${data['height'] * 10} cm`;
     lastHeight = data['height'] * 10;
@@ -205,6 +207,38 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     if (units === 'imperial') {
         height.innerText = `${convertInches((data['height'] * 10 * 0.393701).toFixed(0))}`;
         weight.innerText = `${(data['weight'] / 10 * 2.20462).toFixed(0)} lb`;
+    }
+}
+
+// Update colours for type boxes based on content.
+const updateTypeBoxes = (data, twoTypes) => {
+    const colours = {
+        normal: '#A8A77A',
+        fire: '#EE8130',
+        water: '#6390F0',
+        electric: '#F7D02C',
+        grass: '#7AC74C',
+        ice: '#96D9D6',
+        fighting: '#C22E28',
+        poison: '#A33EA1',
+        ground: '#E2BF65',
+        flying: '#A98FF3',
+        psychic: '#F95587',
+        bug: '#A6B91A',
+        rock: '#B6A136',
+        ghost: '#735797',
+        dragon: '#6F35FC',
+        dark: '#705746',
+        steel: '#B7B7CE',
+        fairy: '#D685AD',
+    };
+
+    const type1 = document.getElementById('type-1');
+    const type2 = document.getElementById('type-2');
+
+    type1.style.backgroundColor = colours[data['types']['0']['type']['name']];
+    if (twoTypes) {
+        type2.style.backgroundColor = colours[data['types']['1']['type']['name']];
     }
 }
 
@@ -461,7 +495,7 @@ const animateMessage = () => {
     resultInfo.scrollTo({
         top: resultInfo.scrollHeight,
         left: 0,
-        behavior: 'smooth' 
+        behavior: 'smooth'
     });
 }
 
@@ -520,7 +554,7 @@ const addCorners = () => {
     const zeldaBtns = Array.from(document.querySelectorAll('.zelda-btn'));
     zeldaBtns.forEach(btn => {
         for (let i = 1; i < 5; i++) {
-            const corner =  document.createElement('div');
+            const corner = document.createElement('div');
             corner.classList.add('corner', `corner-${i}`);
             btn.appendChild(corner);
         }
@@ -531,9 +565,11 @@ addCorners();
 // Add triforce corners to zelda themed help elements.
 const addTriforces = () => {
     const modals = Array.from(document.querySelectorAll('.help'));
+    const header = document.getElementById('header');
+    modals.push(header);
     modals.forEach(modal => {
         for (let i = 1; i < 5; i++) {
-            const triforce =  document.createElement('img');
+            const triforce = document.createElement('img');
             triforce.classList.add('triforce', `triforce-${i}`);
             triforce.src = './images/triforce.png';
             triforce.alt = '';
