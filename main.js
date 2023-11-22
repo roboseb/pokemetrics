@@ -419,11 +419,11 @@ let manTimeout;
 
 // Add wobble animation event listener to wobble button.
 const wobbleBtn = document.getElementById('wobble-btn');
-wobbleBtn.addEventListener('click', () => {
+const animateWobble = () => {
     const wrapper = document.getElementById('art-wrapper-0');
-    const artBox = document.getElementById('poke-art-box');
+    const pokedex = document.getElementById('pokedex');
     const manArt = document.getElementById('man-art');
-    const array = [wrapper, artBox, manArt];
+    const array = [wrapper, pokedex, manArt];
 
     if (wrapper.classList.contains('wobbling')) {
         array.forEach(item => {
@@ -453,8 +453,9 @@ wobbleBtn.addEventListener('click', () => {
 
     clearTimeout(manTimeout);
     manTimeout = setTimeout(resetManArt, 250)
+}
 
-});
+wobbleBtn.addEventListener('click', animateWobble);
 
 const resetWrapper = () => {
     const wrapper = document.getElementById('art-wrapper-0');
@@ -462,8 +463,8 @@ const resetWrapper = () => {
 }
 
 const resetArtBox = () => {
-    const artBox = document.getElementById('poke-art-box');
-    artBox.classList.remove('wobbling', 'wobbling-left');
+    const pokedex = document.getElementById('pokedex');
+    pokedex.classList.remove('wobbling', 'wobbling-left');
 }
 
 const resetManArt = () => {
@@ -587,3 +588,62 @@ helpBtn.addEventListener('click', () => {
         modal.classList.toggle('shown');
     });
 });
+
+
+
+// Animate the pokedex dpad on hover or click.
+const dpadBox = document.getElementById('dpad-box');
+
+const directions = ['up', 'right', 'down', 'left'];
+
+directions.forEach(direction => {
+    const btn = document.getElementById(`dpad-${direction}`);
+    btn.addEventListener('mouseenter', () => {
+        dpadBox.classList.add(`tilt-${direction}`);
+    });
+    btn.addEventListener('mouseleave', () => {
+        dpadBox.className = '';
+    });
+
+    btn.addEventListener('click', () => {
+        dpadBox.className = '';
+        void dpadBox.offsetHeight;
+        dpadBox.classList.add(`clicked-${direction}`);
+
+        const currentID = parseInt(document.getElementById('poke-number').innerText);
+        let nextID = currentID + 1;
+        let prevID = currentID - 1;
+
+        // Wrap IDs when overflowing pokemon.
+        if (nextID > 1017) nextID = 1;
+        if (prevID < 1) prevID = 1017;
+
+        console.log(currentID);
+
+        switch (direction) {
+
+            // Convert to a random pokemon.
+            case 'up':
+                animateUnsummon();
+                convertToPokemon(true);
+                break;
+
+            // Convert to the next pokemon by ID.
+            case 'right':
+                animateUnsummon();
+                convertToPokemon(false, nextID);
+                break;
+            case 'down':
+                animateWobble();
+                break;
+            
+                // Convert to the previous pokemon by ID.
+            case 'left':
+                animateUnsummon();
+                convertToPokemon(false, prevID);
+                break;
+    
+        }
+    })
+});
+

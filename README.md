@@ -136,6 +136,12 @@ November 20th, 2023
 
     Styling, mobile layout, and fix the issues when hosted on github. That's what I've got left I think. Now that I'll be doing four hours of work per day it should be done pretty quick. Then the promotion and the video.
 
+November 21st, 2023
+
+    Hung out my grandma for a while today, so I probably won't end up doing the full 5 hours of work, but I'll try to do about two I think. Maybe enough time to get this button working and start the mobile layout. 
+    
+    For some reason this pokemon details box will not flex to fill container while also not growing it. I think I will limit the size of the pokedex tomorrow and see if that help.
+
 --To-Do--
 
 DONE-basic inputs
@@ -204,15 +210,19 @@ DONE-fix unit change bug
 pokedex dpad cycles through pokemon by id
 -animations for showing new pokemon
 -clean up fonts folder
--MUK IS BROKEN AGAIN/mothim/basculegion
+-MUK IS BROKEN AGAIN/mothim/basculegion/sinistcha(1013)
 -fix uppercase search glitch
+-break up css and js to stylize
+-fix bug with no entered weight/height
+-convert to pokemon again on unit switch
+-add explanation for why some of the names are weird or certain pokemon don't show
 
 
 things done today
-added custom scrollbar to dom console
-style header
-add function for colouring types displayed
-style pokedex. update poke art scaling style. Add logic for coloring pokemon types.
+animated dpad
+add functions to dpad
+add help info to pokedex controls
+move wobble animation from poke art box to pokedex
 
 
 --Credits--
