@@ -1,5 +1,5 @@
-import pokeData from 'pokemetrics/pokeData.json';
-import trimCanvas from 'pokemetrics/trimCanvas';
+import pokeData from './pokeData.js';
+import trimCanvas from './trimCanvas.js';
 
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.

@@ -1,4 +1,4 @@
-{
+const pokeData  ={
     "bulbasaur": {
         "height": 7,
         "weight": 69
@@ -4068,3 +4068,5 @@
         "weight": 398
     }
 }
+
+export default pokeData;
