@@ -1,5 +1,5 @@
-import pokeData from './pokeData.json';
-import trimCanvas from './trimCanvas';
+import pokeData from 'pokemetrics/pokeData.json';
+import trimCanvas from 'pokemetrics/trimCanvas';
 
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.
@@ -177,6 +177,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
 
     const pokeName = document.getElementById('poke-name');
     pokeName.innerText = data['name'].charAt(0).toUpperCase() + data['name'].slice(1);
+    adjustFontSize();
 
     const pokeNumber = document.getElementById('poke-number');
     pokeNumber.innerText = `${data['id']}`;
@@ -337,6 +338,12 @@ const switchUnits = () => {
         pokeWeight.innerText = `${lastWeight} kg`
         units = 'metric';
     }
+
+    // Reload pokemon to show new size with new units.
+    
+    const pokeName = document.getElementById('poke-name').innerText.toLocaleLowerCase();
+    animateUnsummon();
+    convertToPokemon(false, pokeName);
 }
 
 // Convert an amount of inches into feet and inches.
@@ -598,12 +605,12 @@ const directions = ['up', 'right', 'down', 'left'];
 
 directions.forEach(direction => {
     const btn = document.getElementById(`dpad-${direction}`);
-    btn.addEventListener('mouseenter', () => {
-        dpadBox.classList.add(`tilt-${direction}`);
-    });
-    btn.addEventListener('mouseleave', () => {
-        dpadBox.className = '';
-    });
+    // btn.addEventListener('mouseenter', () => {
+    //     dpadBox.classList.add(`tilt-${direction}`);
+    // });
+    // btn.addEventListener('mouseleave', () => {
+    //     dpadBox.className = '';
+    // });
 
     btn.addEventListener('click', () => {
         dpadBox.className = '';
@@ -617,8 +624,6 @@ directions.forEach(direction => {
         // Wrap IDs when overflowing pokemon.
         if (nextID > 1017) nextID = 1;
         if (prevID < 1) prevID = 1017;
-
-        console.log(currentID);
 
         switch (direction) {
 
@@ -647,3 +652,21 @@ directions.forEach(direction => {
     })
 });
 
+// Adjust font size for pokemon name based on length of name.
+const adjustFontSize = () => {
+    const name = document.getElementById('poke-name');
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
+    if (name.innerText.length > 12) {
+        vw < 800 ? name.style.fontSize = '12px' : name.style.fontSize = '18px';
+    } else {
+        name.style.fontSize = null;
+    }
+}
+
+// Add event listener to mobile layout for showing options.
+const optionsBtn = document.getElementById('options-btn');
+optionsBtn.addEventListener('click', () => {
+    const options = document.getElementById('options');
+    options.classList.toggle('shown');
+});

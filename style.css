@@ -39,14 +39,17 @@ button {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
-    background-color: var(--deep-grey);
+    background-color: var(--btn-grey);
 }
 
 #header {
+    box-sizing: border-box;
     padding: 15px 20px;
     color: var(--vanilla);
     background-color: var(--btn-grey);
+    width: 100vw;
 
     font-size: 20px;
 
@@ -92,7 +95,7 @@ button {
 
 #help-btn {
     font-size: 22px;
-    width: 5vw;
+    padding: 0px 20px;
 }
 
 #help-btn::after {
@@ -112,10 +115,19 @@ button {
 
 #wobble-btn {
     font-size: 14px;
-    width: 10vw;
+    padding: 0px 20px;
 }
 
 #wobble-btn::after {
+    background-color: var(--deep-grey);
+}
+
+#options-btn {
+    font-size: 14px;
+    padding: 0px 20px;
+}
+
+#options-btn::after {
     background-color: var(--deep-grey);
 }
 
@@ -127,6 +139,9 @@ button {
     
     background-color: var(--deep-grey);
     filter: drop-shadow(0px -10px 10px rgba(0, 0, 0, 0.404));
+
+    max-width: 1500px;
+    position: relative;
 }
 
 #options {
@@ -472,6 +487,7 @@ button {
     flex-direction: column;
 
     transition: transform 0.25s cubic-bezier(.04,.96,.58,1.18);
+    width: calc(55vh + 35px);
 }
 
 #pokedex.wobbling {
@@ -490,6 +506,8 @@ button {
 
     border-radius: 10px 10px 0px 0px;
     overflow: hidden;
+
+    flex-grow: 1;
 }
 
 #pokedex-header::after {
@@ -625,9 +643,6 @@ button {
 
     padding: 10px;
     transition: transform 0.25s cubic-bezier(.04,.96,.58,1.18);
-
-
-    background-color: yellow;
 }
 
 @keyframes shake {
@@ -835,6 +850,7 @@ button {
     flex: 1;
     display: flex;
     gap: 10px;
+    max-height: 190px;
 
     padding: 20px;
     background-color: rgba(245, 245, 245, 0);
@@ -842,6 +858,7 @@ button {
 
     perspective: 400px;
     perspective-origin: 80% 70%;
+
 }
 
 #pokedex-controls>.help {
@@ -851,9 +868,7 @@ button {
 }
 
 #pokedex-details {
-    
-    flex-basis: 1;
-    /* max-width: 35vw; */
+    flex-grow: 1;
     background-color: #7ebe88;
     border: 5px solid var(--btn-grey);
     border-radius: 10px;
@@ -864,17 +879,23 @@ button {
     justify-content: space-around;
 }
 
+#other-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 #poke-name-wrapper {
     display: flex;
 }
 
 #poke-name {
-    width: 28vw;
     font-size: 24px;
+    white-space: collapse;
 }
 
 #poke-number {
-    font-size: 24px;
+    font-size: 20px;
 }
 
 #type-box {
@@ -890,32 +911,24 @@ button {
 }
 
 #dpad-box {
-    height: 100%;
-    aspect-ratio: 1;
+    /* height: 100%; */
+    width: 150px;
+    height: 150px;
 
     position: relative;
-    filter: drop-shadow(0px 5px 0px black);
     transition: all 0.1s ease-in-out;
 }
 
-#dpad-box.tilt-up {
-    transform: rotateX(10deg);
-    filter: drop-shadow(0px 7px 0px black);
-}
+#dpad-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
 
-#dpad-box.tilt-right {
-    transform: rotateY(10deg);
-    filter: drop-shadow(-2px 5px 0px black);
-}
-
-#dpad-box.tilt-down {
-    transform: rotateX(-10deg);
-    filter: drop-shadow(0px 3px 0px black);
-}
-
-#dpad-box.tilt-left {
-    transform: rotateY(-10deg);
-    filter: drop-shadow(2px 5px 0px black);
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    clip-path: polygon(40% 0, 60% 0, 65% 5%, 65% 35%, 94% 35%, 100% 40%, 100% 60%, 95% 65%, 65% 65%, 65% 95%, 60% 100%, 40% 100%, 35% 95%, 35% 65%, 5% 65%, 0 60%, 0 40%, 5% 35%, 35% 35%, 35% 5%);
+    transform: translate(0px, 5px);
 }
 
 
@@ -925,7 +938,7 @@ button {
 
 @keyframes clicked-up {
     0%{transform: rotateX(15deg)}
-    100% {filter: drop-shadow(0px 7px 0px black);}
+    100% {}
 }
 
 #dpad-box.clicked-right {
@@ -934,9 +947,8 @@ button {
 
 @keyframes clicked-right {
     0%{transform: rotateY(15deg)}
-    100% {filter: drop-shadow(-2px 5px 0px black);}
+    100% {}
 }
-
 
 #dpad-box.clicked-down {
     animation: clicked-down 0.2s ease-in-out;
@@ -944,7 +956,7 @@ button {
 
 @keyframes clicked-down {
     0%{transform: rotateX(-15deg)}
-    100% {filter: drop-shadow(0px 3px 0px black);}
+    100% {}
 }
 
 
@@ -954,9 +966,46 @@ button {
 
 @keyframes clicked-left {
     0%{transform: rotateY(-15deg)}
-    100% {filter: drop-shadow(2px 5px 0px black);}
+    100% {}
 }
 
+#dpad-box.clicked-up #dpad-shadow {
+    animation: clicked-up-shadow 0.2s ease-in-out;
+}
+
+@keyframes clicked-up-shadow {
+    0%{transform: translate(0px, 7px)}
+    100% {transform: translate(0px, 5px)}
+}
+
+#dpad-box.clicked-right #dpad-shadow {
+    animation: clicked-right-shadow 0.2s ease-in-out;
+}
+
+@keyframes clicked-right-shadow {
+    0%{transform: translate(-2px, 5px)}
+    100% {transform: translate(0px, 5px)}
+}
+
+
+#dpad-box.clicked-down #dpad-shadow{
+    animation: clicked-down-shadow 0.2s ease-in-out;
+}
+
+@keyframes clicked-down-shadow {
+    0%{transform: translate(0px, 3px)}
+    100% {transform: translate(0px, 5px)}
+}
+
+
+#dpad-box.clicked-left #dpad-shadow{
+    animation: clicked-left-shadow 0.2s ease-in-out;
+}
+
+@keyframes clicked-left-shadow {
+    0%{transform: translate(2px, 5px)}
+    100% {transform: translate(0px, 5px)}
+}
 
 #dpad {
     position: absolute;
@@ -977,6 +1026,11 @@ button {
     width: 30%;
 
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.dpad-btn:hover {
+    filter: brightness(20);
 }
 
 .dpad-btn::after {
@@ -1031,7 +1085,7 @@ button {
     padding: 0px 30px;
     border-radius: 5px;
 
-    transition: all 0.5s cubic-bezier(.15,.7,.48,1.20);
+    transition: all 0.4s cubic-bezier(.15,.7,.48,1.20);
     pointer-events: none;
     filter: opacity(0);
     transform: translate(0%, 100%);
@@ -1075,4 +1129,145 @@ button {
     bottom: 10px;
     left: 10px;
     transform: rotate(270deg);
+}
+
+@media only screen and (max-width: 800px) {
+    #options {
+        box-sizing: border-box;
+        width: 100vw;
+        height: 100%;
+
+        position: absolute;
+        z-index: 4;
+        background-color: var(--btn-grey);
+
+        transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transform: translate(0%, 100%);
+    }
+
+    #options.shown {
+        transform: translate(0%, 0%);
+    }
+
+    #help-btn {
+        font-size: 18px;
+        padding: 0px 10px;
+    }
+
+    #wobble-btn {
+        font-size: 14px;
+        padding: 0px 10px;
+    }
+
+    #options-btn {
+        padding: 0px 10px;
+    }
+
+    #header {
+        font-size: 15px;   
+    }
+
+    #pokedex-header {
+        max-height: 15vh;
+    }
+
+    #pokedex {
+        box-sizing: border-box;
+        width: 100vw;
+        margin: 0px;
+    }
+
+    #pokedex-details {
+        height: 17vh;
+    }
+
+    #art-box-wrapper {
+        box-sizing: border-box;
+        margin: 20px 10px 10px 10px;
+        height: initial;
+        aspect-ratio: 1;
+    }
+
+    #poke-art-box {
+        box-sizing: border-box;
+        height: 100%;
+        width: initial;
+        aspect-ratio: 1;
+    }
+
+
+    #dpad-box {
+        width: 100px;
+        height: 100px;
+        align-self: center;
+    }
+
+    #poke-name {
+        font-size: 14px;
+    }
+
+    #poke-number {
+        font-size: 14px;
+    }
+    
+    #type-box {
+        display: flex;
+        gap: 20px;
+        flex: 1;
+        font-size: 14px;
+    }
+    
+    #poke-height-weight {
+        display: flex;
+        font-size: 14px;
+        gap: 20px;
+    }
+
+    #pokedex-controls {
+        /* display: none; */
+        flex: 1;
+        padding: 10px;
+        margin-bottom: 10px;
+        max-height: initial;
+        align-items: center;
+    }
+
+    .corner {
+        display: none;
+    }
+
+    .zelda-btn:hover::before {
+        background-color: initial;
+        height: initial;
+        width: initial;
+        filter: initial;
+    }
+
+    .dpad-btn:hover {
+        filter: initial;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    #poke-name {
+        font-size: 12px;
+    }
+
+    #poke-number {
+        font-size: 10px;
+    }
+    
+    #type-box {
+        gap: 5px;
+        font-size: 10px;
+    }
+
+    #poke-height-weight {
+        font-size: 10px;
+        gap: 5px;
+    }
+
+    #pokedex-details {
+        height: 14vh;
+    }
 }

@@ -15,6 +15,9 @@
             <h1>Pokemetric!</h1>
 
             <div id="header-btns">
+                <button id="options-btn" class='zelda-btn'>
+                    <div class="btn-text">Options</div>
+                </button>
                 <button id="wobble-btn" class='zelda-btn'>
                     <div class="btn-text">Wobble</div>
                 </button>
@@ -36,7 +39,7 @@
 
                             <label for="poke-name-input">Pokemon Name</label>
                             <div class="input-box">
-                                <input type="text" id='poke-name-input' value='azurill'>
+                                <input type="text" id='poke-name-input' value='basculegion-male'>
                             </div>
                         </div>
                         <div class="form-box">
@@ -219,12 +222,14 @@
                         </div>
                     </div>
                     <div id="dpad-box">
+                        <div id="dpad-shadow"></div>
                         <div id="dpad"></div>
                         <div class="dpad-btn" id="dpad-up"></div>
                         <div class="dpad-btn" id="dpad-right"></div>
                         <div class="dpad-btn" id="dpad-down"></div>
                         <div class="dpad-btn" id="dpad-left"></div>
                     </div>
+
                     <div class="help">
                         <div>The display shows the current pokemon's name, ID, types and dimensions. The D-pad cycles to the next pokemon by ID with the left and right buttons. Up will select a random pokemon. Down will wobble the pokedex.</div>
                     </div>

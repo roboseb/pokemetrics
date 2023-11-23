@@ -142,6 +142,14 @@ November 21st, 2023
     
     For some reason this pokemon details box will not flex to fill container while also not growing it. I think I will limit the size of the pokedex tomorrow and see if that help.
 
+November 22nd, 2023
+
+    Busy day again today. Hopefully I can get through 5 hours of work today so that I can make some serious progress and wrap this up before the end of the week.
+
+Novemeber 23rd, 2023
+
+    Three hours yesterday, hopefully the full five today. Gonna start with restyling the dpad, cause it looks real dumb in mobile and with the full framerate. Mobile layout is basically done already and looks pretty good.
+
 --To-Do--
 
 DONE-basic inputs
@@ -210,12 +218,13 @@ DONE-fix unit change bug
 pokedex dpad cycles through pokemon by id
 -animations for showing new pokemon
 -clean up fonts folder
--MUK IS BROKEN AGAIN/mothim/basculegion/sinistcha(1013)
+-MUK IS BROKEN AGAIN/mothim/basculegion/sinistcha(1013)enamourous incarnate in mobile mode
 -fix uppercase search glitch
 -break up css and js to stylize
 -fix bug with no entered weight/height
--convert to pokemon again on unit switch
+DONE-convert to pokemon again on unit switch
 -add explanation for why some of the names are weird or certain pokemon don't show
+-button to back out of options in mobile version
 
 
 things done today
@@ -223,6 +232,11 @@ animated dpad
 add functions to dpad
 add help info to pokedex controls
 move wobble animation from poke art box to pokedex
+
+Added function to update font size if overflowing
+fixed style on poke controls to avoid pushing dpad off
+add styling for wider desktop layout
+reconvert to pokemon after unit switch
 
 
 --Credits--
