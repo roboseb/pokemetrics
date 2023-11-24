@@ -1,22 +1,33 @@
-import pokeData from './pokeData.js';
-import trimCanvas from './trimCanvas.js';
-import pokeAliases from './pokeAliases.js';
+import pokeData from './scripts/pokeData.js';
+import trimCanvas from './scripts/trimCanvas.js';
+import pokeAliases from './scripts/pokeAliases.js';
+
+let artLoaded = true;
 
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.
 async function convertToPokemon(randomized, pokemon) {
 
+    // Prevent loading new pokemon until previous is loaded to avoid errors.
+    if (!artLoaded) return;
+
     const pokeNameInput = document.getElementById('poke-name-input');
     let selection;
-    randomized ? selection = Math.floor((Math.random() * 1008) + 1) : selection = pokeNameInput.value;
+    const regex = new RegExp(/-|_|\s/, "g");
+    randomized ? selection = Math.floor((Math.random() * 1008) + 1) : selection = pokeNameInput.value.toLowerCase();
     if (pokemon) {
         selection = pokemon;
-
-    // If entered name is a pokemon with a non standard API entry, translate it.
-    } else if (pokeAliases[pokeNameInput.value] !== undefined) {
-        selection = pokeAliases[pokeNameInput.value];
+        // If entered name is a pokemon with a non standard API entry, translate it.
+    } else if (pokeAliases[pokeNameInput.value.toLowerCase().replaceAll(regex, '')] !== undefined && randomized == false) {
+        selection = pokeAliases[pokeNameInput.value.toLowerCase().replaceAll(regex, '')];
     }
-    
+
+    // Prevent breaking the app when attempting to convert to poltchageist.
+    if (selection == 'poltchageist' || selection == '1013') {
+        logMessage('Poltchageist is not currently available, please choose another pokemon.', true);
+        return;
+    }
+
     fetch(`https://pokeapi.co/api/v2/pokemon/${selection}`).then((response) => {
         if (response.ok) {
             return response.json();
@@ -114,7 +125,10 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
 
     const pokeArtBox = document.getElementById('poke-art-box');
 
+    artLoaded = false;
+
     pokeArt.addEventListener("load", (e) => {
+        artLoaded = true;
 
         // Clear all previous art from the box.
         const wrapperArray = Array.from(document.querySelectorAll('.art-wrapper'));
@@ -134,6 +148,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
             canvas.height = pokeArt.height;
             const ctx = canvas.getContext("2d");
             // Draw the reference image before trimming.
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(pokeArt, 0, 0, canvas.height * pokeArt.width / pokeArt.height, canvas.height);
 
@@ -183,7 +198,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
     });
 
     const pokeName = document.getElementById('poke-name');
-    pokeName.innerText = data['name'].charAt(0).toUpperCase() + data['name'].slice(1);
+    pokeName.innerText = data['species']['name'].charAt(0).toUpperCase() + data['species']['name'].slice(1);
     adjustFontSize();
 
     const pokeNumber = document.getElementById('poke-number');
@@ -265,7 +280,7 @@ const resizeArtBox = (data) => {
     // Shrink the entire artbox down if pokemon is too wide to maintin aspect ratio.
     if (canvas.offsetWidth >= artBox.offsetWidth - 30) {
         //console.log('oversized art of', data.name)
-        artBox.style.height = '35vh';
+        artBox.style.height = '60%';
     } else if (lastPokemon !== data.name) {
         //console.log('art is not too big of ' + data.name)
         artBox.style.height = null;
@@ -352,7 +367,7 @@ const switchUnits = () => {
     }
 
     // Reload pokemon to show new size with new units.
-    
+
     const pokeName = document.getElementById('poke-name').innerText.toLocaleLowerCase();
     animateUnsummon();
     convertToPokemon(false, pokeName);
@@ -367,13 +382,15 @@ const convertInches = (inches) => {
 
 // Animate pokemon leaving the display.
 const animateUnsummon = () => {
-    // const shownArt = Array.from(document.querySelectorAll('.poke-art'));
-    // shownArt.forEach(art => {
-    //     art.classList.remove('summon');
-    //     art.classList.add('unsummon');
-    // });
-    // const firstWrapper = document.getElementById('art-wrapper-0');
-    // firstWrapper.classList.add('unsummon-wrapper');
+    // Prevent loading new pokemon until previous is loaded to avoid errors.
+    if (!artLoaded) return;
+    const shownArt = Array.from(document.querySelectorAll('.poke-art'));
+    shownArt.forEach(art => {
+        art.classList.remove('summon');
+        art.classList.add('unsummon');
+    });
+    const firstWrapper = document.getElementById('art-wrapper-0');
+    firstWrapper.classList.add('unsummon-wrapper');
 }
 
 // Animate the man being snapped back and forth by the summoning of pokemon.
@@ -541,7 +558,7 @@ const validateMeasurement = () => {
     let userHeight = document.getElementById('height-input').value;
     let userWeight = document.getElementById('weight-input').value;
 
-    if (userHeight > 400 || userWeight > 1000) {
+    if (userHeight > 400 || userWeight > 1000 || userHeight == '' || userWeight == '') {
         logMessage('Please enter a weight under 1000 and a height under 400.', true)
         return false;
     } else {
@@ -615,61 +632,78 @@ helpBtn.addEventListener('click', () => {
     });
 });
 
-
-
-// Animate the pokedex dpad on hover or click.
+// Animate the dpad and perform action based on direction.
 const dpadBox = document.getElementById('dpad-box');
+const processDirection = (direction) => {
+    dpadBox.className = '';
+    void dpadBox.offsetHeight;
+    dpadBox.classList.add(`clicked-${direction}`);
 
+    const currentID = parseInt(document.getElementById('poke-number').innerText);
+    let nextID = currentID + 1;
+    let prevID = currentID - 1;
+
+    // Wrap IDs when overflowing pokemon.
+    if (nextID > 1017) nextID = 1;
+    if (prevID < 1) prevID = 1017;
+
+    switch (direction) {
+
+        // Convert to a random pokemon.
+        case 'up':
+            animateUnsummon();
+            convertToPokemon(true);
+            break;
+
+        // Convert to the next pokemon by ID.
+        case 'right':
+            animateUnsummon();
+            convertToPokemon(false, nextID);
+            break;
+        case 'down':
+            animateWobble();
+            break;
+
+        // Convert to the previous pokemon by ID.
+        case 'left':
+            animateUnsummon();
+            convertToPokemon(false, prevID);
+            break;
+    }
+}
+
+// Animate dpad and perform actions on click.
 const directions = ['up', 'right', 'down', 'left'];
-
 directions.forEach(direction => {
     const btn = document.getElementById(`dpad-${direction}`);
-    // btn.addEventListener('mouseenter', () => {
-    //     dpadBox.classList.add(`tilt-${direction}`);
-    // });
-    // btn.addEventListener('mouseleave', () => {
-    //     dpadBox.className = '';
-    // });
 
     btn.addEventListener('click', () => {
-        dpadBox.className = '';
-        void dpadBox.offsetHeight;
-        dpadBox.classList.add(`clicked-${direction}`);
-
-        const currentID = parseInt(document.getElementById('poke-number').innerText);
-        let nextID = currentID + 1;
-        let prevID = currentID - 1;
-
-        // Wrap IDs when overflowing pokemon.
-        if (nextID > 1017) nextID = 1;
-        if (prevID < 1) prevID = 1017;
-
-        switch (direction) {
-
-            // Convert to a random pokemon.
-            case 'up':
-                animateUnsummon();
-                convertToPokemon(true);
-                break;
-
-            // Convert to the next pokemon by ID.
-            case 'right':
-                animateUnsummon();
-                convertToPokemon(false, nextID);
-                break;
-            case 'down':
-                animateWobble();
-                break;
-            
-                // Convert to the previous pokemon by ID.
-            case 'left':
-                animateUnsummon();
-                convertToPokemon(false, prevID);
-                break;
-    
-        }
+        processDirection(direction);
     })
 });
+
+// Perform virtual dpad actions on arrow keys presses.
+const checkKey = (e) => {
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+        // up arrow
+        processDirection('up');
+    }
+    else if (e.keyCode == '40') {
+        // down arrow
+        processDirection('down');
+    }
+    else if (e.keyCode == '37') {
+        // left arrow
+        processDirection('left');
+    }
+    else if (e.keyCode == '39') {
+        // right arrow
+        processDirection('right');
+    }
+}
+document.onkeydown = checkKey;
 
 // Adjust font size for pokemon name based on length of name.
 const adjustFontSize = () => {
@@ -689,3 +723,10 @@ optionsBtn.addEventListener('click', () => {
     const options = document.getElementById('options');
     options.classList.toggle('shown');
 });
+
+const backBtn = document.getElementById('back-btn');
+backBtn.addEventListener('click', () => {
+    const options = document.getElementById('options');
+    options.classList.toggle('shown');
+});
+
