@@ -3,9 +3,10 @@
 
 [Live Site](https://roboseb.github.io/pokemetrics)
 
-![average woman same size as a blastoise](images/average_woman.jpg)
 ### About
 Pokemetric allows you to compare yourself to every single pokemon currently released, from Gen I through Gen IX. I was initially inspired by the meme below. Turns out the average woman is somewhere between a Hypno and a Golduck.
+
+![average woman same size as a blastoise](images/average_woman.jpg)
 
 ### Features
 - Enter your height and weight to learn which pokemon you're closest in size to.
