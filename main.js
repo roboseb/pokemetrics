@@ -1,5 +1,6 @@
 import pokeData from './pokeData.js';
 import trimCanvas from './trimCanvas.js';
+import pokeAliases from './pokeAliases.js';
 
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.
@@ -8,8 +9,14 @@ async function convertToPokemon(randomized, pokemon) {
     const pokeNameInput = document.getElementById('poke-name-input');
     let selection;
     randomized ? selection = Math.floor((Math.random() * 1008) + 1) : selection = pokeNameInput.value;
-    if (pokemon) selection = pokemon;
+    if (pokemon) {
+        selection = pokemon;
 
+    // If entered name is a pokemon with a non standard API entry, translate it.
+    } else if (pokeAliases[pokeNameInput.value] !== undefined) {
+        selection = pokeAliases[pokeNameInput.value];
+    }
+    
     fetch(`https://pokeapi.co/api/v2/pokemon/${selection}`).then((response) => {
         if (response.ok) {
             return response.json();
@@ -241,6 +248,9 @@ const updateTypeBoxes = (data, twoTypes) => {
     if (twoTypes) {
         type2.style.backgroundColor = colours[data['types']['1']['type']['name']];
     }
+
+    const colouredBox = document.getElementById('coloured-box');
+    colouredBox.style.backgroundColor = colours[data['types']['0']['type']['name']];
 }
 
 let lastPokemon = null;
@@ -318,9 +328,11 @@ const switchUnits = () => {
     if (units === 'metric') {
         heightUnit.innerText = 'in';
         weightUnit.innerText = 'lbs';
+        localStorage.setItem('units', 'imperial');
     } else {
         heightUnit.innerText = 'cm';
         weightUnit.innerText = 'kg';
+        localStorage.setItem('units', 'metric');
     }
 
     // Get previous displayed weight and height to convert.
@@ -355,13 +367,13 @@ const convertInches = (inches) => {
 
 // Animate pokemon leaving the display.
 const animateUnsummon = () => {
-    const shownArt = Array.from(document.querySelectorAll('.poke-art'));
-    shownArt.forEach(art => {
-        art.classList.remove('summon');
-        art.classList.add('unsummon');
-    });
-    const firstWrapper = document.getElementById('art-wrapper-0');
-    firstWrapper.classList.add('unsummon-wrapper');
+    // const shownArt = Array.from(document.querySelectorAll('.poke-art'));
+    // shownArt.forEach(art => {
+    //     art.classList.remove('summon');
+    //     art.classList.add('unsummon');
+    // });
+    // const firstWrapper = document.getElementById('art-wrapper-0');
+    // firstWrapper.classList.add('unsummon-wrapper');
 }
 
 // Animate the man being snapped back and forth by the summoning of pokemon.
@@ -373,7 +385,14 @@ const animateManSnap = () => {
 }
 
 const unitBtn = document.getElementById('unit-btn');
-let units = 'metric';
+let units = localStorage.getItem('units');
+if (units == null) units == 'imperial';
+if (units == 'metric') {
+    const heightUnit = document.getElementById('height-unit');
+    const weightUnit = document.getElementById('weight-unit');
+    heightUnit.innerText = 'cm';
+    weightUnit.innerText = 'kg';
+}
 unitBtn.addEventListener('click', switchUnits);
 
 // Load from predetermined pokemon with buttons.

@@ -150,6 +150,8 @@ Novemeber 23rd, 2023
 
     Three hours yesterday, hopefully the full five today. Gonna start with restyling the dpad, cause it looks real dumb in mobile and with the full framerate. Mobile layout is basically done already and looks pretty good.
 
+    After my mobile layout grind yesterday and a little bit of fixing imports today, there is officially a hosted version that runs very well on desktop and mobile. And I am happy.
+
 --To-Do--
 
 DONE-basic inputs
@@ -158,7 +160,7 @@ DONE-enter weight
 DONE-enter height
 DONE-average both
 DONE-show pokemon stats
--custom font
+DONE-custom font
 -three.js integration
 DONE-prevent errors for unexpected input
 -verify fetches are sanitized with input
@@ -167,14 +169,14 @@ DONE-unit options (default metric?)
 DONE-person silhouette to compare sizes, keep pokemon same size never change man. Never cut pokemon art off.
 DONE-error message for pokemon not found
 DONE-figure out how to pluralize with s or x
--show height/show weight toggle
+CANCEL-show height/show weight toggle
 DONE-avoid recursion on infinite .catch for fetch
--mobile layout
--possible pokedex styling
--style using pokemoncolor data/extra fetch
--localstorage to save units
--tierzoo attack animations
--throw multiple pokeballs to show how many pokemon
+DONE-mobile layout
+DONE-possible pokedex styling
+SORTA DONE-style using pokemoncolor data/extra fetch
+DONE-localstorage to save units
+SORTA-tierzoo attack animations
+CANCEL-throw multiple pokeballs to show how many pokemon
 DONE-add feet and inches
 DONE-use canvas and trim canvas to stack pokemon
 CANCEL-hovering over a pokemon in a stack makes all those below stay straighter but those above still wobble
@@ -187,7 +189,7 @@ DONE-error modals
 DONE-fix art with issues - skarmory, raikou, dialga, metagross, electivire, muk, onix
 DONE-shadows under pokemon
 CANCEL?-wobble toggle
--buttons that show specific pokemon, like the biggest or smallest
+DONE-buttons that show specific pokemon, like the biggest or smallest
 DONE-fix man not transitioning
 DONE-app gets slower as you use it?
 DONE-possibly fix pokemon not being removed if next loads too quickly
@@ -195,36 +197,42 @@ DONE-summonOpacity class is being overwritten
 CANCEL-man snapped animation relative to pokemon weight relative to user weight?
 DONE-random pokemon button
 DONE-add splash effect for pokemon summon
--pokeball art
+CANCEL-pokeball art
 CANCEL-wait to finish unsummon animation before summon
 DONE-randomized based on generation button
 DONE?-fix bug with art box not resizing in certain cases
 CANCEL-only show wobble button with multiple pokemon
 DONE-transition bug when switching from large to small pokemon
 DONE-fix man not following art box (don't clear everything!)
--add links to my github/twitter/youtube/whatever
--add option to remove constraints, possibly crashing the site
--save pokemon as favourite + local storage
--dark mode and localdata for mode choice
--clear local storage button
--tooltips for different options
--favicon
--custom cursor?
+DONE-add links to my github/twitter/youtube/whatever
+CANCEL-add option to remove constraints, possibly crashing the site
+CANCEL-save pokemon as favourite + local storage
+CANCEL-dark mode and localdata for mode choice
+CANCEL-clear local storage button
+DONE-tooltips for different options
+DONE-favicon
+CANCEL-custom cursor?
 DONE-fix unit change bug
--fix errors when being hosted
--update specific pokemon buttons
--rapidly clicking random breaks height animation
+DONE-fix errors when being hosted
+DONE-update specific pokemon buttons
+-rapidly clicking random breaks height animation and causes errors
 -add button for switching to sprite art
 pokedex dpad cycles through pokemon by id
 -animations for showing new pokemon
 -clean up fonts folder
--MUK IS BROKEN AGAIN/mothim/basculegion/sinistcha(1013)enamourous incarnate in mobile mode
+-MUK IS BROKEN AGAIN/mothim/basculegion/sinistcha(1013)enamourous/reuniclus full size incarnate in mobile mode/wailord/kyogre/sizzlipedegraveler
 -fix uppercase search glitch
 -break up css and js to stylize
 -fix bug with no entered weight/height
 DONE-convert to pokemon again on unit switch
 -add explanation for why some of the names are weird or certain pokemon don't show
 -button to back out of options in mobile version
+-arrow keys for dpad input
+-put back species name
+-add buttons that pop up for alternate pokemon forms (double check for all multiple form pokemon)
+-move weird names to its own file
+-accept spaces in input or hyphens or no spaces
+-style up readme with known bugs, gif, link to live site and future features
 
 
 things done today
@@ -237,6 +245,14 @@ Added function to update font size if overflowing
 fixed style on poke controls to avoid pushing dpad off
 add styling for wider desktop layout
 reconvert to pokemon after unit switch
+
+fixed imports
+fixed dpad animation
+fixed name displayed for form names
+added aliases for form names
+added coloured box that updates colour with pokemon types
+added localstorage for saving previously used units
+added favicon
 
 
 --Credits--

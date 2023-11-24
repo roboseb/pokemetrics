@@ -42,6 +42,7 @@ button {
     align-items: center;
 
     background-color: var(--btn-grey);
+    overflow: hidden;
 }
 
 #header {
@@ -125,6 +126,7 @@ button {
 #options-btn {
     font-size: 14px;
     padding: 0px 20px;
+    display: none;
 }
 
 #options-btn::after {
@@ -607,6 +609,80 @@ button {
     background-color: var(--vanilla);
 
     overflow: hidden;
+    position: relative;
+}
+
+#art-box-wrapper>.help {
+    color: var(--vanilla);
+    pointer-events: initial;
+}
+
+#links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+}
+
+#links a {
+    text-decoration: none;
+    color: var(--vanilla);
+    position: relative;
+    z-index: 1;
+    padding: 5px 5px 0px 5px;
+}
+
+#links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: 100%;
+    background-color: var(--magenta);
+    z-index: 0;
+    text-align: center;
+    transform: translate(0%, 100%);
+    filter: opacity(0);
+
+    white-space: nowrap;
+    padding: 5px 5px 0px 5px;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+#links a#link-twitter::before {
+    content: 'To Twitter!'
+}
+
+#links a#link-github::before {
+    content: 'To Github!'
+}
+
+#links a#link-youtube::before {
+    content: 'To YouTube!'
+}
+
+#links a#link-portfolio::before {
+    content: 'To Portfolio!'
+}
+
+#links a:hover::before {
+    transform: translate(0%, 0%);
+    filter: opacity(1);
+}
+
+#coloured-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    width: 50%;
+
+    transform: translate(-50%, -50%) rotate(287.5deg);
+    background-color: red;
+    /* border-radius: 100%; */
+    filter: opacity(0.2);
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .art-padding {
@@ -1132,6 +1208,11 @@ button {
 }
 
 @media only screen and (max-width: 800px) {
+
+    #main {
+        flex-direction: column-reverse;
+    }
+
     #options {
         box-sizing: border-box;
         width: 100vw;
@@ -1161,6 +1242,7 @@ button {
 
     #options-btn {
         padding: 0px 10px;
+        display: initial;
     }
 
     #header {

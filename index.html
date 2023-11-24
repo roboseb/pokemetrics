@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemetric!</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
 </head>
 
 <body>
@@ -39,14 +40,14 @@
 
                             <label for="poke-name-input">Pokemon Name</label>
                             <div class="input-box">
-                                <input type="text" id='poke-name-input' value='basculegion-male'>
+                                <input type="text" id='poke-name-input' value='onix'>
                             </div>
                         </div>
                         <div class="form-box">
                             <label for="height-input">Your Height</label>
                             <div class="input-box">
                                 <input type="number" id='height-input' min='1' max='400' value="72">
-                                <div class="unit-box" id="height-unit">cm</div>
+                                <div class="unit-box" id="height-unit">in</div>
                             </div>
 
 
@@ -56,7 +57,7 @@
                             <label for="weight-input">Your Weight</label>
                             <div class="input-box">
                                 <input type="number" id='weight-input' min="1" max='1000' value='200'>
-                                <div class="unit-box" id='weight-unit'>kg</div>
+                                <div class="unit-box" id='weight-unit'>lbs</div>
                             </div>
 
 
@@ -106,23 +107,26 @@
 
 
                 <div id="def-pokemon-btns">
-                    <button class="def-pokemon-btn zelda-btn" data-name='dialga'>
-                        <div class="btn-text">Dialga</div>
+                    <button class="def-pokemon-btn zelda-btn" data-name='pikachu'>
+                        <div class="btn-text">Pikachu</div>
                     </button>
-                    <button class="def-pokemon-btn zelda-btn" data-name='palkia'>
-                        <div class="btn-text">Palkia</div>
+                    <button class="def-pokemon-btn zelda-btn" data-name='charizard'>
+                        <div class="btn-text">Charizard</div>
                     </button>
-                    <button class="def-pokemon-btn zelda-btn" data-name='azurill'>
-                        <div class="btn-text">Azurill</div>
+                    <button class="def-pokemon-btn zelda-btn" data-name='blastoise'>
+                        <div class="btn-text">Blastoise</div>
                     </button>
-                    <button class="def-pokemon-btn zelda-btn" data-name='electivire'>
-                        <div class="btn-text">Electivire</div>
+                    <button class="def-pokemon-btn zelda-btn" data-name='venusaur'>
+                        <div class="btn-text">Venusaur</div>
                     </button>
-                    <button class="def-pokemon-btn zelda-btn" data-name='onix'>
-                        <div class="btn-text">Onix</div>
+                    <button class="def-pokemon-btn zelda-btn" data-name='flabebe'>
+                        <div class="btn-text">Flabebe</div>
                     </button>
-                    <button class="def-pokemon-btn zelda-btn" data-name='muk'>
-                        <div class="btn-text">Muk</div>
+                    <button class="def-pokemon-btn zelda-btn" data-name='exeggutor-alola'>
+                        <div class="btn-text">Alolan Exeggutor</div>
+                    </button>
+                    <button class="def-pokemon-btn zelda-btn" data-name='wailord'>
+                        <div class="btn-text">Wailord</div>
                     </button>
                     <button class="def-pokemon-btn zelda-btn" data-name='eternatus'>
                         <div class="btn-text">Eternatus</div>
@@ -191,15 +195,28 @@
                 </div>
 
                 <div id="art-box-wrapper">
+                    <div id="coloured-box"></div>
                     <div class='art-padding' id='art-padding-top'></div>
                     <div id="poke-art-box">
                         <div class="art-wrapper">
                             <canvas id="poke-art" class='poke-art'></canvas>
                         </div>
+                        
                         <img id="man-art" src="./images/man_outline.png" alt="Black outline of a man">
                     </div>
                     <div class='art-padding' id='art-padding-bottom'></div>
-
+                    <div class="help">
+                        <div>
+                            <p>Seb here. Hope you're having fun with Pokemetric! It took me a while to make. Below are some links to get in contact with me or simply see other things I've made.</p>
+                            <div id="links">
+                                <a id='link-twitter' href="https://twitter.com/roboseb" target=”_blank” rel="noopener noreferrer">Twitter</a>
+                                <a id='link-github' href="https://github.com/roboseb" target=”_blank” rel="noopener noreferrer">Github</a>
+                                <a id='link-youtube' href="https://www.youtube.com/roboseb" target=”_blank” rel="noopener noreferrer">YouTube</a>
+                                <a id='link-portfolio' href="https://roboseb.github.io/personal-website/" target=”_blank” rel="noopener noreferrer">Portfolio</a>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <div id="pokedex-controls">
