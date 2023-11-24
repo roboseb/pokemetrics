@@ -1,4 +1,6 @@
 # Pokemetric!
+![Gif of pokemetric site in action](images/pokemetric.gif)
+
 [Live Site](https://roboseb.github.io/pokemetrics)
 
 ![average woman same size as a blastoise](images/average_woman.jpg)
