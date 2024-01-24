@@ -7,11 +7,7 @@ let artLoaded = true;
 // Fetch pokemon API data and then convert/display units.
 // If randomized is passed as true, select a random pokemon ID to convert.
 async function convertToPokemon(randomized, pokemon) {
-
-    setTimeout(() => {
-        animateLoading();
-    }, 0)
-
+    
     // Prevent loading new pokemon until previous is loaded to avoid errors.
     if (!artLoaded) return;
     artLoaded = false;
@@ -730,9 +726,3 @@ backBtn.addEventListener('click', () => {
     const options = document.getElementById('options');
     options.classList.toggle('shown');
 });
-
-// Give loading message while waiting for new pokemon info.
-const animateLoading = () => {
-    const pokeName = document.getElementById('poke-name');
-    pokeName.innerText = 'Loading...';
-}
