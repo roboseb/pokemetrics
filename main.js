@@ -8,8 +8,13 @@ let artLoaded = true;
 // If randomized is passed as true, select a random pokemon ID to convert.
 async function convertToPokemon(randomized, pokemon) {
 
+    setTimeout(() => {
+        animateLoading();
+    }, 0)
+
     // Prevent loading new pokemon until previous is loaded to avoid errors.
     if (!artLoaded) return;
+    artLoaded = false;
 
     const pokeNameInput = document.getElementById('poke-name-input');
     let selection;
@@ -125,10 +130,7 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
 
     const pokeArtBox = document.getElementById('poke-art-box');
 
-    artLoaded = false;
-
     pokeArt.addEventListener("load", (e) => {
-        artLoaded = true;
 
         // Clear all previous art from the box.
         const wrapperArray = Array.from(document.querySelectorAll('.art-wrapper'));
@@ -165,9 +167,6 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
                 trimmedCanvas.style.opacity = null;
             }, i * 100 + 100)
 
-
-
-
             if (i > 0) {
                 const previousWrapper = document.getElementById(`art-wrapper-${i - 1}`);
                 previousWrapper.appendChild(wrapper);
@@ -195,6 +194,8 @@ const displayPokeInfo = (data, heightFactor, oldHeightFactor, inverseRatio) => {
 
         resizeArtBox(data, inverseRatio);
         animateManSnap();
+
+        artLoaded = true;
     });
 
     const pokeName = document.getElementById('poke-name');
@@ -403,7 +404,7 @@ const animateManSnap = () => {
 
 const unitBtn = document.getElementById('unit-btn');
 let units = localStorage.getItem('units');
-if (units == null) units == 'imperial';
+if (units == null) units = 'imperial';
 if (units == 'metric') {
     const heightUnit = document.getElementById('height-unit');
     const weightUnit = document.getElementById('weight-unit');
@@ -730,3 +731,8 @@ backBtn.addEventListener('click', () => {
     options.classList.toggle('shown');
 });
 
+// Give loading message while waiting for new pokemon info.
+const animateLoading = () => {
+    const pokeName = document.getElementById('poke-name');
+    pokeName.innerText = 'Loading...';
+}

@@ -151,3 +151,15 @@ November 24th, 2023
     God damn this took almost 20 hours longer than expected to get done. It always takes twice as long as you think, even accounting for it taking twice as long.
 
     App works really well though. Just gotta spend today cleaning up some to-do stuff and adding whatever little features I can in 5 hours.
+
+January 23rd, 2024
+
+    Coming back to this to do some bugfixing before promoting it more heavily as a main project.
+
+    Fixed the unit measurement bug by removing exactly one "=".
+
+    Fixed issue with pokedex being cut off while wobbling on wider layouts.
+
+    Fixed bug with trying to summon new pokemon too quickly in succession.
+
+    Moved navbar back to top to prevent issues with mobile layout on some devices.
